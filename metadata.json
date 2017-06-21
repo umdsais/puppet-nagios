@@ -1,0 +1,14 @@
+{
+  "name": "jgazeley/nagios",
+  "version": "0.1.0",
+  "author": "jgazeley",
+  "summary": "Manage Nagios, NRPE, NSCA, PNP4Nagios, BPI and other monitoring components",
+  "license": "Apache-2.0",
+  "source": "https://github.com/djjudas21/puppet-nagios",
+  "project_page": "https://github.com/djjudas21/puppet-nagios",
+  "issues_url": "https://github.com/djjudas21/puppet-nagios/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ]
+}
+
