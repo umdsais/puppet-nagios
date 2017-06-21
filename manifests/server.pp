@@ -1,5 +1,6 @@
 # Nagios config for monitoring servers
 class nagios::server ($dev = false) {
+  include ::nagios::nsca::server
   include ::profile::apache
   include ::profile::apache::ssl
   include ::mod_auth_cas
@@ -20,7 +21,6 @@ class nagios::server ($dev = false) {
     'nagios',
     'pnp4nagios',
     'nagios-plugins-nrpe',
-    'nsca',
     'VMware-vSphere-Perl-SDK',
     'freeradius-utils',
     'perl-LWP-Protocol-https',
@@ -177,15 +177,6 @@ class nagios::server ($dev = false) {
     },
   }
 
-  # NSCA service to accept passive checks
-  service { 'nsca':
-    ensure     => running,
-    enable     => true,
-    hasstatus  => true,
-    hasrestart => true,
-    require    => [ Service['nagios'], Package['nsca'], File['nsca.cfg'] ],
-  }
-
   # Install SELinux Nagios policy
   if $::osfamily == 'RedHat' {
     selinux::module { 'resnet-nagios':
@@ -214,17 +205,6 @@ class nagios::server ($dev = false) {
     require => Package['nagios'],
     notify  => Service['nagios'],
     before  => Service['nagios'],
-  }
-
-  # NSCA config
-  file { 'nsca.cfg':
-    name    => '/etc/nagios/nsca.cfg',
-    mode    => '0600',
-    owner   => 'root',
-    group   => 'root',
-    source  => 'puppet:///modules/nagios/nsca.cfg',
-    require => Package['nsca'],
-    notify  => Service['nsca'],
   }
 
   file { 'resource.cfg':
@@ -286,10 +266,6 @@ class nagios::server ($dev = false) {
     provider => 'ip6tables',
     action   => 'accept',
   }
-
-  # Firewall rules for NSCA
-  # Automatically grant NSCA access to any managed host
-  Firewall <<| tag == 'nsca' |>>
 
   # collect resources and populate /etc/nagios/nagios_*.cfg
   Nagios_host <<| |>> {

@@ -1,5 +1,6 @@
 # Configures nagios client and sets up basic checks
 class nagios::client {
+  include nagios::nsca::client
 
   # NOTE
   # We are using $::default_ipaddress in some places as it returns the IP
@@ -24,14 +25,6 @@ class nagios::client {
       'Debian' => 'nagios-nrpe-server',
     },
     require => [Class['epel'],User['nrpe']],
-  }
-
-  package { 'nsca-client':
-    ensure => installed,
-    name   => $::osfamily ? {
-      'RedHat' => 'nsca-client',
-      'Debian' => 'nsca',
-    },
   }
 
   # Install some perl modules on Debian as they don't seem to get pulled in by any dependencies
@@ -123,22 +116,6 @@ class nagios::client {
       ensure => link,
       target => '/etc/nagios/nrpe.d',
     }
-  }
-
-  # Auto-add a NSCA firewall rule on the monitor server just for us
-  @@firewall { "200-nsca-${::fqdn}":
-    proto  => 'tcp',
-    dport  => '5667',
-    tag    => 'nsca',
-    source => $::default_ipaddress,
-    action => 'accept',
-  }
-  @@firewall { "200-nsca-v6-${::fqdn}":
-    proto    => 'tcp',
-    dport    => '5667',
-    source   => $::ipaddress6,
-    provider => 'ip6tables',
-    action   => 'accept',
   }
 
   # Add a VIRTUAL nrpe user
