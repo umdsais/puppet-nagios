@@ -20,7 +20,6 @@ class nagios::server ($dev = false) {
   package { [
     'nagios',
     'pnp4nagios',
-    'nagios-plugins-nrpe',
     'VMware-vSphere-Perl-SDK',
     'freeradius-utils',
     'perl-LWP-Protocol-https',
@@ -249,23 +248,6 @@ class nagios::server ($dev = false) {
   # Turn all hiera users & groups into virtual users 
   # & groups which will later be selectively realised
   create_resources('nagios::user', $unifiedusers)
-
-  # Auto-add a firewall rule in the NRPE clients just for us
-  @@firewall { "100-nrpe-${::fqdn}":
-    proto  => 'tcp',
-    dport  => '5666',
-    tag    => 'nrpe',
-    source => $::ipaddress,
-    action => 'accept',
-  }
-  @@firewall { "100-nrpe-v6-${::fqdn}":
-    proto    => 'tcp',
-    dport    => '5666',
-    tag      => 'nrpe',
-    source   => $::ipaddress6,
-    provider => 'ip6tables',
-    action   => 'accept',
-  }
 
   # collect resources and populate /etc/nagios/nagios_*.cfg
   Nagios_host <<| |>> {
