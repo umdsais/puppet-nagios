@@ -19,7 +19,7 @@
 # critical_threshold - the number of problems a group reaches before going 'critical'
 # priority - (1-3) this sets the display priority on screen, 1 being 'high priority'
 
-define nagios::bpiconfig (
+define nagios::bpi::config (
   $displayname,
   $members,
   $nagios = true,
