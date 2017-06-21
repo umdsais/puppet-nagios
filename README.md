@@ -11,19 +11,75 @@
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+This module installs and manages Nagios, NRPE, NSCA, BPI and PNP4Nagios to give
+you a full monitoring stack.
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
+While Nagios itself is not too complex, a full stack installation includes a
+number of optional components. Let's have a look at the terminology - if you are
+new to Nagios you should definitely read and understand the definitions before
+attempting to use this module.
 
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+### Nagios
+
+Nagios is the name of the main monitoring application, and it includes a web
+application and a backend daemon. The daemon does the actual monitoring by executing
+plugins which send probes to clients, and then displaying the results in the web
+application or sending them via notifications.
+
+Be careful with the terminology: here we use *server* to refer to the Nagios server,
+and *client* to refer to the Nagios clients, even though they may be servers in
+their own right.
+
+```
++--------+      +--------+
+| Nagios | ---> | Client |
++--------+      +--------+
+```
+
+### NRPE
+
+While Nagios is good at sending probes to clients that are offering services (e.g.
+sending HTTP requests to web servers) it needs something extra to probe non-public
+aspects of a client, e.g. checking CPU usage.
+
+To achieve this, we run the NRPE daemon on the client which listens for the server
+and executes plugins to probe the local system. The Nagios server probes NRPE on
+the client which runs the plugin and returns the result to Nagios.
+
+```
++--------+      +--------+      +--------+
+| Nagios | ---> |  NRPE  | ---> | Client |
++--------+      +--------+      +--------+
+```
+
+### NSCA
+
+NSCA works the other way round from NRPE. NSCA runs on the server and listens for
+clients to submit passive checks to Nagios on their own schedule (e.g. via cron)
+rather than the Nagios server initiating the probes.
+
+```
++--------+      +--------+      +--------+
+| Nagios | <--- |  NSCA  | <--- | Client |
++--------+      +--------+      +--------+
+```
+
+### BPI
+
+BPI (Business Process Intelligence) is an addon for Nagios which is able to model
+real-world applications based on a set of probes. For example: you may have a cluster
+of 2 web servers and so long as either server is up, the overall service is up. You
+might not care if only one server is down. BPI uses logic like this to work out if
+your real services are up or down and send appropriate alerts.
+
+### PNP4Nagios
+
+Some Nagios plugins return performance data as well as a status code. Out of the
+box, Nagios can't do anything with this data, but PNP4Nagios can process this data
+and automatically draw graphs.
+
 
 ## Usage
 
