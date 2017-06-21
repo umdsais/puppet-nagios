@@ -1,7 +1,8 @@
 # Nagios config for monitoring servers
 class nagios::server (
+  $url,
   $dev = false
-) inherits nagios::params {
+) {
   include ::nagios::nsca::server
   include ::mod_auth_cas
   include ::apache::mod::cgi
@@ -28,17 +29,17 @@ class nagios::server (
   }
 
   # Non-SSL redirect
-  ::apache::vhost { 'nagios.example.com-http':
-    servername      => 'nagios.example.com',
+  ::apache::vhost { "${url}-http":
+    servername      => $url,
     port            =>  80,
     docroot         => '/usr/lib64/nagios/cgi-bin',
     redirect_status => 'permanent',
-    redirect_dest   => 'https://nagios.example.com/',
+    redirect_dest   => "https://${url}/",
   }
 
   # Main SSL vhost for nagios and pnp4nagios
-  ::apache::vhost { 'nagios.example.com-https':
-    servername           => 'nagios.example.com',
+  ::apache::vhost { "${url}-https":
+    servername           => ${url},
     port                 => 443,
     docroot              => '/usr/lib64/nagios/cgi-bin',
     notify               => Service['httpd'],
@@ -50,7 +51,7 @@ class nagios::server (
     directoryindex       => 'index.php',
     setenvif             => 'User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown',
     redirectmatch_regexp => '^/$',
-    redirectmatch_dest   => 'https://servicename.com/nagios',
+    redirectmatch_dest   => "https://${url}/nagios",
     redirectmatch_status => 'permanent',
     aliases              => [
       {
