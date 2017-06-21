@@ -52,7 +52,7 @@ class nagios::bpi (
   }
 
   # Install SELinux Nagios BPI policy
-  if $::osfamily == 'RedHat' {
+  if ($selinux) {
     selinux::module { 'resnet-bpi':
       ensure    => 'present',
       source_te => 'puppet:///modules/nagios/resnet-bpi.te',

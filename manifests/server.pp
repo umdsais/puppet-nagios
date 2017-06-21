@@ -1,9 +1,22 @@
 # Nagios config for monitoring servers
 class nagios::server (
+  $nrpe,
+  $nsca,
+  $selinux,
+  $firewall,
   $url,
   $dev = false
 ) {
-  include ::nagios::nsca::server
+
+  if ($nsca) {
+    include ::nagios::nsca::server
+  }
+
+  if ($nrpe) {
+    include ::nagios::nrpe::server
+  }
+
+
   include ::mod_auth_cas
   include ::apache::mod::cgi
   include ::apache::mod::php
@@ -168,7 +181,7 @@ class nagios::server (
   }
 
   # Install SELinux Nagios policy
-  if $::osfamily == 'RedHat' {
+  if ($selinux) {
     selinux::module { 'resnet-nagios':
       ensure    => 'present',
       source_te => 'puppet:///modules/nagios/resnet-nagios.te',

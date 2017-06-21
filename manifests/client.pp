@@ -1,6 +1,19 @@
 # Configures nagios client and sets up basic checks
-class nagios::client {
-  include nagios::nsca::client
+class nagios::client (
+  $nrpe,
+  $nsca,
+  $selinux,
+  $firewall,
+) {
+
+  if ($nsca) {
+    include nagios::nsca::client
+  }
+
+  if ($nrpe) {
+    include nagios::nrpe::client
+  }
+
 
   # NOTE
   # We are using $::default_ipaddress in some places as it returns the IP

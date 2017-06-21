@@ -32,7 +32,7 @@ class nagios::nrpe::client {
   }
 
   # Install SELinux NRPE policy
-  if $::osfamily == 'RedHat' {
+  if ($selinux) {
     selinux::module { 'resnet-nrpe':
       ensure    => 'present',
       source_te => 'puppet:///modules/nagios/nrpe/resnet-nrpe.te',

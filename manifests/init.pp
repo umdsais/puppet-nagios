@@ -11,14 +11,22 @@ class nagios (
 
   # Configure Nagios client
   if ($client) {
-    class { '::nagios::client': }
+    class { '::nagios::client':
+      nrpe     => $nrpe,
+      nsca     => $nsca,
+      selinux  => $selinux,
+      firewall => $firewall,
+    }
   }
 
   # Configure Nagios server
   if ($server) {
     class { '::nagios::server':
-      url => $url,
+      url      => $url,
+      nrpe     => $nrpe,
+      nsca     => $nsca,
+      selinux  => $selinux,
+      firewall => $firewall,
     }
   }
-
 }
