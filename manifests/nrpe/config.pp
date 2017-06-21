@@ -1,7 +1,7 @@
 # Install a nrpe config snippet to make the plugin accessible
 # Some stock plugins lack a NRPE snippet so will need nrpeconfig{}
 # without nagiosplugin{}
-define nagios::nrpeconfig(
+define nagios::nrpe::config(
   $command,
   $sudo = undef,
   $sudo_user = 'root',
@@ -9,7 +9,7 @@ define nagios::nrpeconfig(
 ) {
 
   if ! ($ensure in [ 'present', 'absent' ]) {
-    fail('nrpeconfig ensure parameter must be absent or present')
+    fail('nagios::nrpe::config ensure parameter must be absent or present')
   }
 
   file { "${title}.cfg":
