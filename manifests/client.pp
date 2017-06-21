@@ -14,9 +14,30 @@ class nagios::client {
   # https://git.services.bristol.ac.uk/resnet/resnet-puppet/merge_requests/664
 
   include ::nagios
-  include ::cron::kernel_passive
-  include ::cron::hardware_spec
-  include ::nagios::plugins::core
+
+  if $::osfamily == 'RedHat' {
+    package { ['nagios-plugins',
+      'nagios-plugins-all',
+      'nagios-plugins-bonding',
+      'nagios-plugins-perl']:
+      ensure  => installed,
+      require => Class['epel'],
+    }
+
+    package { 'nagios-plugins-check-tcptraffic':
+      ensure  => installed,
+      require => Yumrepo['resnet'],
+    }
+  }
+
+  if $::operatingsystem == 'Ubuntu' {
+    package { ['nagios-plugins',
+      'nagios-plugins-basic',
+      'nagios-plugins-standard',
+      'nagios-plugins-extra']:
+    ensure  => installed,
+    }
+  }
 
   # Create a hostgroup for our OS
   @@nagios::create_hostgroup { $::fqdn:
