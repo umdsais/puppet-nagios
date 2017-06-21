@@ -145,16 +145,6 @@ class nagios::server (i
     default => 1,
   }
 
-  # Remove stock nagios and pnp configs because they dont work
-  # They will be replaced when the RPM is upgraded so keep this block
-  file { [
-    '/etc/httpd/conf.d/nagios.conf',
-    '/etc/httpd/conf.d/pnp4nagios.conf',
-  ]:
-    ensure  => absent,
-    require => Package['httpd', 'nagios'],
-  }
-
   # Start the Nagios service, and make it restart if there have been changes to the config
   # We use the reload command rather than restart, since it is much faster
   service { 'nagios':
