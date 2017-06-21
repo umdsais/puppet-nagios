@@ -1,10 +1,8 @@
 # Nagios config for monitoring servers
-class nagios::server (i
+class nagios::server (
   $dev = false
 ) inherits nagios::params {
   include ::nagios::nsca::server
-  include ::profile::apache
-  include ::profile::apache::ssl
   include ::mod_auth_cas
   include ::apache::mod::cgi
   include ::apache::mod::php
@@ -14,8 +12,6 @@ class nagios::server (i
   include ::nagios::commands
   include ::nagios::manual
   include ::nagios::aggregates
-  include ::nagios::plugins::all
-  include ::nagios::plugins::server
   include ::nagios::templates
 
   # Install Nagios package
@@ -27,9 +23,6 @@ class nagios::server (i
   # Install nagios and other necessary packages
   package { [
     'pnp4nagios',
-    'VMware-vSphere-Perl-SDK',
-    'freeradius-utils',
-    'perl-LWP-Protocol-https',
   ]:
     ensure  => installed,
   }
