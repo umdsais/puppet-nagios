@@ -4,16 +4,27 @@ class nagios::client (
   $nsca,
   $selinux,
   $firewall,
+  $nsca_client_package,
+  $nrpe_package,
+  $nrpe_service,
+  $nrpe_config,
+  $nrpe_d,
 ) {
 
   if ($nsca) {
-    include nagios::nsca::client
+    class { '::nagios::nsca::client':
+      nsca_client_package =>  $nsca_client_package,
+      firewall =>  $firewall,
   }
 
   if ($nrpe) {
-    include nagios::nrpe::client
+    class { '::nagios::nrpe::client':
+      nrpe_package =>  $nrpe_package,
+      nrpe_service =>  $nrpe_service,
+      nrpe_config =>  $nrpe_config,
+      nrpe_d  =>  $nrpe_d,
+      selinux =>  $selinux,
   }
-
 
   # NOTE
   # We are using $::default_ipaddress in some places as it returns the IP

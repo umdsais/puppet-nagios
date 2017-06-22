@@ -1,5 +1,7 @@
 # Install the Nagios BPI addon
 class nagios::bpi (
+  $url,
+  $selinux,
   $webroot = '/usr/share/nagios/html/bpi',
 ) {
 
@@ -11,7 +13,7 @@ class nagios::bpi (
   # Take over ownership of the BPI config file
   concat { 'bpi.conf':
     ensure  => present,
-    path    => '/usr/share/nagios/html/bpi/bpi.conf',
+    path    => "${webroot}/bpi.conf",
     require => Package['nagiosbpi'],
     owner   => 'root',
     group   => 'apache',
@@ -48,7 +50,7 @@ class nagios::bpi (
     check_command   => 'check_dummy!0',
     icon_image      => 'nagios.gif',
     statusmap_image => 'nagios.gd2',
-    notes_url       => 'https://status.resnet.bris.ac.uk/nagios/bpi/index.php',
+    notes_url       => "https://${url}/nagios/bpi/index.php",
   }
 
   # Install SELinux Nagios BPI policy

@@ -1,12 +1,15 @@
 # NRPE config for clients
-class nagios::nrpe::client {
+class nagios::nrpe::client (
+  $nrpe_package,
+  $nrpe_service,
+  $nrpe_config,
+  $nrpe_d,
+  $selinux,
+) {
 
   package { 'nrpe':
     ensure  => installed,
-    name    => $::osfamily ? {
-      'RedHat' => 'nrpe',
-      'Debian' => 'nagios-nrpe-server',
-    },
+    name    => $nrpe_package,
     require => [Class['epel'],User['nrpe']],
   }
 
@@ -20,11 +23,7 @@ class nagios::nrpe::client {
   # Start the service
   service { 'nrpe':
     ensure     => running,
-    name       => $::osfamily ? {
-      'RedHat' => 'nrpe',
-      'Debian' => 'nagios-nrpe-server',
-      default  => 'nrpe',
-    },
+    name       => $nrpe_service,
     require    => [ File['nrpe.cfg'], Package['nrpe'] ],
     enable     => true,
     hasstatus  => true,
@@ -46,21 +45,13 @@ class nagios::nrpe::client {
 
   # Install base nrpe config
   file { 'nrpe.cfg':
-    name    => '/etc/nagios/nrpe.cfg',
+    name    => $nrpe_config,
     mode    => '0755',
     owner   => 'root',
     group   => 'root',
     source  => 'puppet:///modules/nagios/nrpe/nrpe.cfg',
     require => Package['nrpe'],
     notify  => Service['nrpe'],
-  }
-
-  # Add a symlink for the different path on ubuntu
-  if $::osfamily == 'Debian' {
-    file { '/etc/nrpe.d':
-      ensure => link,
-      target => '/etc/nagios/nrpe.d',
-    }
   }
 
   # Add a VIRTUAL nrpe user

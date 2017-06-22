@@ -6,6 +6,7 @@ define nagios::nrpe::config(
   $sudo = undef,
   $sudo_user = 'root',
   $ensure = present,
+  $nrpe_d,
 ) {
 
   if ! ($ensure in [ 'present', 'absent' ]) {
@@ -14,11 +15,7 @@ define nagios::nrpe::config(
 
   file { "${title}.cfg":
     ensure  => $ensure,
-    name    => $::osfamily ? {
-      'RedHat' => "/etc/nrpe.d/${title}.cfg",
-      'Debian' => "/etc/nagios/nrpe.d/${title}.cfg",
-      default  => "/etc/nrpe.d/${title}.cfg",
-    },
+    name    => "${nrpe_d}/${title}.cfg",
     content => $sudo ? {
       true    => "command[${title}]=/usr/bin/sudo -u ${sudo_user} /usr/${::lib_path}/nagios/plugins/${command}\n",
       default => "command[${title}]=/usr/${::lib_path}/nagios/plugins/${command}\n",

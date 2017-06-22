@@ -6,14 +6,27 @@ class nagios::server (
   $firewall,
   $url,
   $dev = false
+  $nagios_package,
+  $nagios_service,
+  $serveradmin,
+  $nsca_server_package,
+  $nsca_service,
+  $nsca_config,
+  $nrpe_plugin_package,
 ) {
 
   if ($nsca) {
-    include ::nagios::nsca::server
+    class { '::nagios::nsca::server':
+      nsca_server_package => $nsca_server_package,
+      nsca_service => $nsca_service,
+      nsca_config => $nsca_config,
+      firewall => $firewall,
   }
 
   if ($nrpe) {
-    include ::nagios::nrpe::server
+    class { '::nagios::nrpe::server':
+      firewall => $firewall,
+      nrpe_plugin_package => $nrpe_plugin_package,
   }
 
 
@@ -31,7 +44,7 @@ class nagios::server (
   # Install Nagios package
   package { 'nagios':
     ensure => installed,
-    name   => $nagios::nagios_package,
+    name   => $nagios_package,
   }
 
   # Install nagios and other necessary packages
@@ -60,7 +73,7 @@ class nagios::server (
     ssl_cert             => '/path/to/cert.crt',
     ssl_key              => '/path/to/key.key',
     ssl_chain            => '/path/to/chain.crt',
-    serveradmin          => 'test@example.com',
+    serveradmin          => $serveradmin,
     directoryindex       => 'index.php',
     setenvif             => 'User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown',
     redirectmatch_regexp => '^/$',
@@ -156,6 +169,7 @@ class nagios::server (
   # We use the reload command rather than restart, since it is much faster
   service { 'nagios':
     ensure  => running,
+    name    => $nagios_service,
     enable  => true,
     restart => $::operatingsystemmajrelease ? {
       '6'     => '/sbin/service nagios reload',
