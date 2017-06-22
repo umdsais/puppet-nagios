@@ -68,4 +68,8 @@ class nagios::params {
   $webroot = $::osfamily ? {
     default => '/usr/share/nagios/html',
   }
+
+  $cgiroot = $::osfamily ? {
+    default => '/usr/lib64/nagios/cgi-bin',
+  }
 }

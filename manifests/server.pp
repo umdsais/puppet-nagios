@@ -14,6 +14,7 @@ class nagios::server (
   $nsca_config,
   $nrpe_plugin_package,
   $webroot,
+  $cgiroot,
 ) {
 
   if ($nsca) {
@@ -61,7 +62,7 @@ class nagios::server (
   ::apache::vhost { "${url}-http":
     servername      => $url,
     port            =>  80,
-    docroot         => '/usr/lib64/nagios/cgi-bin',
+    docroot         => $cgiroot,
     redirect_status => 'permanent',
     redirect_dest   => "https://${url}/",
   }
@@ -70,7 +71,7 @@ class nagios::server (
   ::apache::vhost { "${url}-https":
     servername           => $url,
     port                 => 443,
-    docroot              => '/usr/lib64/nagios/cgi-bin',
+    docroot              => $cgiroot,
     notify               => Service['httpd'],
     ssl                  => true,
     ssl_cert             => '/path/to/cert.crt',
@@ -85,7 +86,7 @@ class nagios::server (
     aliases              => [
       {
         scriptalias => '/nagios/cgi-bin',
-        path        => '/usr/lib64/nagios/cgi-bin',
+        path        => $cgiroot,
       },
       {
         alias => '/nagios',
@@ -103,7 +104,7 @@ class nagios::server (
     ],
     directories          => [
       {
-        path           => '/usr/lib64/nagios/cgi-bin/',
+        path           => $cgiroot,
         options        => '+ExecCGI',
         allow_override => 'All',
         order          => 'Allow,Deny',
