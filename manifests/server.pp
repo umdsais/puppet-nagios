@@ -13,6 +13,7 @@ class nagios::server (
   $nsca_service,
   $nsca_config,
   $nrpe_plugin_package,
+  $webroot,
 ) {
 
   if ($nsca) {
@@ -88,16 +89,16 @@ class nagios::server (
       },
       {
         alias => '/nagios',
-        path  => '/usr/share/nagios/html',
+        path  => $webroot,
       },
 
       {
         alias => '/apple-touch-icon.png',
-        path  => '/usr/share/nagios/html/apple-touch-icon.png',
+        path  => "${webroot}/apple-touch-icon.png",
       },
       {
         alias => '/pnp4nagios',
-        path  => '/usr/share/nagios/html/pnp4nagios/',
+        path  => "${webroot}/pnp4nagios/",
       },
     ],
     directories          => [
@@ -111,7 +112,7 @@ class nagios::server (
         auth_require   => 'valid-user local',
       },
       {
-        path           => '/usr/share/nagios/html',
+        path           => $webroot,
         options        => 'None',
         allow_override => 'All',
         order          => 'Allow,Deny',
@@ -120,7 +121,7 @@ class nagios::server (
         auth_require   => 'valid-user',
       },
       {
-        path           => '/usr/share/nagios/html/bpi',
+        path           => "${webroot}/bpi",
         options        => 'None',
         allow_override => 'All',
         order          => 'Allow,Deny',
@@ -129,7 +130,7 @@ class nagios::server (
         auth_require   => 'valid-user',
       },
       {
-        path           => '/usr/share/nagios/html/pnp4nagios/',
+        path           => "${webroot}/pnp4nagios/",
         allow_override => 'None',
         order          => 'Allow,Deny',
         allow          => 'from All',

@@ -41,6 +41,7 @@ class nagios (
       nsca     => $nsca,
       selinux  => $selinux,
       firewall => $firewall,
+      webroot  => $webroot,
     }
   }
 }
