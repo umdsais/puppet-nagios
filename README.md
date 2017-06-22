@@ -96,7 +96,30 @@ and automatically draw graphs.
 ## Usage
 
 This module is designed so the base class `::nagios` is a single point of entry
-for all private classes.
+for all private classes. The private classes are included where necessary, by the
+base blass. There are also some defined types which should be directly called
+where necessary to configure extras.
+
+bpi.pp
+client.pp
+create_hostgroup.pp
+create_servicegroup.pp
+icon.pp
+init.pp
+params.pp
+plugin.pp
+server.pp
+templates.pp
+
+bpi::config.pp
+
+nrpe::client.pp
+nrpe::config.pp
+nrpe::server.pp
+
+nsca::client.pp
+nsca::server.pp
+
 
 ## Reference
 
