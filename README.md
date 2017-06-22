@@ -23,7 +23,7 @@ attempting to use this module.
 
 This module is quite opinionated about how Nagios should be set up. I've made it as
 configurable as I can without deviating from the model that I believe is best,
-which ha been extensively tested in our local environment before publishing.
+which has been extensively tested in our local environment before publishing.
 
 This module makes heavy use of exported resources to configure Nagios. You **must**
 have a working Puppet environment with exported resources before using this module.
