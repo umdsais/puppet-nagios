@@ -2,7 +2,7 @@
 class nagios::bpi (
   $url,
   $selinux,
-  $webroot = '/usr/share/nagios/html/bpi',
+  $webroot,
 ) {
 
   # Install BPI
@@ -13,7 +13,7 @@ class nagios::bpi (
   # Take over ownership of the BPI config file
   concat { 'bpi.conf':
     ensure  => present,
-    path    => "${webroot}/bpi.conf",
+    path    => "${webroot}/bpi/bpi.conf",
     require => Package['nagiosbpi'],
     owner   => 'root',
     group   => 'apache',
@@ -28,7 +28,7 @@ class nagios::bpi (
     order  => '10',
   }
 
-  file { "${webroot}/tmp":
+  file { "${webroot}/bpi/tmp":
     ensure  => directory,
     owner   => 'root',
     group   => 'apache',

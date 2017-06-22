@@ -66,6 +66,6 @@ class nagios::params {
   }
 
   $webroot = $::osfamily ? {
-    default => '/usr/share/nagios/html/bpi',
+    default => '/usr/share/nagios/html',
   }
 }
