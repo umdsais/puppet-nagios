@@ -5,7 +5,7 @@ class nagios::nsca::client (
 ) {
   package { 'nsca-client':
     ensure => installed,
-    name   => $nsca_client_package, 
+    name   => $nsca_client_package,
   }
 
   if ($firewall) {

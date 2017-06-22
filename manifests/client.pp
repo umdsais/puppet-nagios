@@ -14,16 +14,18 @@ class nagios::client (
   if ($nsca) {
     class { '::nagios::nsca::client':
       nsca_client_package =>  $nsca_client_package,
-      firewall =>  $firewall,
+      firewall            =>  $firewall,
+    }
   }
 
   if ($nrpe) {
     class { '::nagios::nrpe::client':
       nrpe_package =>  $nrpe_package,
       nrpe_service =>  $nrpe_service,
-      nrpe_config =>  $nrpe_config,
-      nrpe_d  =>  $nrpe_d,
-      selinux =>  $selinux,
+      nrpe_config  =>  $nrpe_config,
+      nrpe_d       =>  $nrpe_d,
+      selinux      =>  $selinux,
+    }
   }
 
   # NOTE

@@ -64,3 +64,4 @@ class nagios::nrpe::client (
 
   # Add firewall rule to allow NRPE from the monitoring server
   Firewall <<| tag == 'nrpe' |>>
+}

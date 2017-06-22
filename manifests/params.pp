@@ -8,7 +8,7 @@ class nagios::params {
     default  => 'nagios',
   }
 
-  $nagios_service = = $::osfamily ? {
+  $nagios_service = $::osfamily ? {
     'RedHat' => 'nagios',
     'Debian' => 'nagios',
     default  => 'nagios',
@@ -17,13 +17,13 @@ class nagios::params {
   $nrpe_package = $::osfamily ? {
     'RedHat' => 'nrpe',
     'Debian' => 'nagios-nrpe-server',
-  },
+  }
 
   $nrpe_server = $::osfamily ? {
     'RedHat' => 'nrpe',
     'Debian' => 'nagios-nrpe-server',
     default  => 'nrpe',
-  },
+  }
 
   $nrpe_config = $::osfamily ? {
     'RedHat' => '/etc/nagios/nrpe.cfg',

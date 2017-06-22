@@ -5,7 +5,7 @@ class nagios::server (
   $selinux,
   $firewall,
   $url,
-  $dev = false
+  $dev = false,
   $nagios_package,
   $nagios_service,
   $serveradmin,
@@ -18,15 +18,17 @@ class nagios::server (
   if ($nsca) {
     class { '::nagios::nsca::server':
       nsca_server_package => $nsca_server_package,
-      nsca_service => $nsca_service,
-      nsca_config => $nsca_config,
-      firewall => $firewall,
+      nsca_service        => $nsca_service,
+      nsca_config         => $nsca_config,
+      firewall            => $firewall,
+    }
   }
 
   if ($nrpe) {
     class { '::nagios::nrpe::server':
-      firewall => $firewall,
+      firewall            => $firewall,
       nrpe_plugin_package => $nrpe_plugin_package,
+    }
   }
 
 
@@ -65,7 +67,7 @@ class nagios::server (
 
   # Main SSL vhost for nagios and pnp4nagios
   ::apache::vhost { "${url}-https":
-    servername           => ${url},
+    servername           => $url,
     port                 => 443,
     docroot              => '/usr/lib64/nagios/cgi-bin',
     notify               => Service['httpd'],
