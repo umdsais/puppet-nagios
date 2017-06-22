@@ -64,4 +64,8 @@ class nagios::params {
     'Debian' => '/etc/nagios/nsca.cfg',
     default  => '/etc/nagios/nsca.cfg',
   }
+
+  $webroot = $::osfamily ? {
+    default => '/usr/share/nagios/html/bpi',
+  }
 }
