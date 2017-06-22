@@ -21,6 +21,18 @@ number of optional components. Let's have a look at the terminology - if you are
 new to Nagios you should definitely read and understand the definitions before
 attempting to use this module.
 
+This module is quite opinionated about how Nagios should be set up. I've made it as
+configurable as I can without deviating from the model that I believe is best,
+which ha been extensively tested in our local environment before publishing.
+
+This module makes heavy use of exported resources to configure Nagios. You **must**
+have a working Puppet environment with exported resources before using this module.
+
+**Warning**: This module uses `puppetlabs/apache` to configure the web frontend.
+Be aware that `puppetlabs/apache` will **purge** all other Apache config that is
+not managed with `puppetlabs/apache`. This Nagios module with play nicely with
+other web sites configured with `apache::vhost` but it will break anything else.
+
 ### Nagios
 
 Nagios is the name of the main monitoring application, and it includes a web
