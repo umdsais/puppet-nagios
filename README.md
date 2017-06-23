@@ -152,5 +152,4 @@ This is where you list OS compatibility, version compatibility, etc.
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
+This module was written primarily for internal use - features we haven't needed to use probably haven't been written. Please send pull requests with new features and bug fixes. You are also welcome to file issues but I make no guarantees of development effort if the features aren't useful to my employer.
