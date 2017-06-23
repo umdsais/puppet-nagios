@@ -32,9 +32,9 @@ class nagios::nrpe::client (
 
   # Install SELinux NRPE policy
   if ($selinux) {
-    selinux::module { 'resnet-nrpe':
+    selinux::module { 'nrpe':
       ensure    => 'present',
-      source_te => 'puppet:///modules/nagios/nrpe/resnet-nrpe.te',
+      source_te => 'puppet:///modules/nagios/nrpe/nrpe.te',
     }
     selboolean { 'nagios_run_sudo':
       name       => nagios_run_sudo,

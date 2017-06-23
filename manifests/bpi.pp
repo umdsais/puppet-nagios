@@ -55,9 +55,9 @@ class nagios::bpi (
 
   # Install SELinux Nagios BPI policy
   if ($selinux) {
-    selinux::module { 'resnet-bpi':
+    selinux::module { 'bpi':
       ensure    => 'present',
-      source_te => 'puppet:///modules/nagios/resnet-bpi.te',
+      source_te => 'puppet:///modules/nagios/bpi.te',
     }
   }
 }
