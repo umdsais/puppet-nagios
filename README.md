@@ -11,7 +11,7 @@
 
 ## Overview
 
-This module installs and manages Nagios, NRPE, NSCA, BPI and PNP4Nagios to give you a full monitoring stack.
+This module installs and manages [Nagios](https://www.nagios.org/), [NRPE](https://exchange.nagios.org/directory/Addons/Monitoring-Agents/NRPE--2D-Nagios-Remote-Plugin-Executor/details#_ga=2.77165653.1717758004.1498228250-1930082806.1498228250), [NSCA](https://exchange.nagios.org/directory/Addons/Passive-Checks/NSCA--2D-Nagios-Service-Check-Acceptor/details#_ga=2.77165653.1717758004.1498228250-1930082806.1498228250), [BPI](https://exchange.nagios.org/directory/Addons/Components/Nagios-Business-Process-Intelligence-&#40;BPI&#41;/details) and [PNP4Nagios](https://docs.pnp4nagios.org/) to give you a full monitoring stack.
 
 ## Module Description
 
