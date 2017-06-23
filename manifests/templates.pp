@@ -50,16 +50,6 @@ class nagios::templates {
     statusmap_image => 'aggregate.gd2',
   }
 
-  nagios_host { 'resnet-server':
-    use      => 'generic-host',
-    register => '0',
-  }
-
-  nagios_host { 'netops-server':
-    use      => 'generic-host',
-    register => '0',
-  }
-
   # Service templates
   nagios_service{ 'generic-service':
     active_checks_enabled        => '1',
