@@ -19,9 +19,9 @@ While Nagios itself is not too complex, a full stack installation includes a num
 
 This module is quite opinionated about how Nagios should be set up. I've made it as configurable as I can without deviating from the model that I believe is best, which has been extensively tested in our local environment before publishing.
 
-This module makes heavy use of exported resources to configure Nagios. You **must** have a working Puppet environment with exported resources before using this module.
+This module makes heavy use of [Puppet exported resources](https://docs.puppet.com/puppet/4.10/lang_exported.html) to configure Nagios. You **must** have a working Puppet and PuppetDB environment with exported resources before using this module.
 
-**Warning**: This module uses `puppetlabs/apache` to configure the web frontend. Be aware that `puppetlabs/apache` will **purge** all other Apache config that is not managed with `puppetlabs/apache`. This Nagios module with play nicely with other web sites configured with `apache::vhost` but it will break anything else.
+**Warning**: This module uses [`puppetlabs/apache`](https://forge.puppet.com/puppetlabs/apache) to configure the web frontend. Be aware that `puppetlabs/apache` will **purge** all other Apache config that is not managed with `puppetlabs/apache`. This Nagios module with play nicely with other web sites configured with `apache::vhost` but it will break anything else.
 
 ### Nagios
 
@@ -63,7 +63,7 @@ BPI (Business Process Intelligence) is an addon for Nagios which is able to mode
 
 ### PNP4Nagios
 
-Some Nagios plugins return performance data as well as a status code. Out of the box, Nagios can't do anything with this data, but PNP4Nagios can process this data and automatically draw graphs.
+Some Nagios plugins return performance data as well as a status code. Out of the box, Nagios can't do anything with this data, but PNP4Nagios can process this data with RRD and automatically draw graphs.
 
 
 ## Usage
@@ -85,10 +85,10 @@ Install support for NRPE, which is required if you want to execute Nagios checks
 Install support for NSCA, which is required if you want to execute passive Nagios checks. Default: `false`
 
 #### `selinux`
-Manage SELinux rules to allow Nagios components to run properly on the clients and server. Strongly recommended if you are running a Red Hat family distro, and SELinux is enabled on your system. Default: `false`
+Manage SELinux rules to allow Nagios components to run properly on the clients and server. Strongly recommended if you are running a Red Hat family distro, and SELinux is enabled on your system. Requires [`puppet/selinux`](https://forge.puppet.com/puppet/selinux). Default: `false`
 
 #### `firewall`
-Manage firewall rules on Nagios clients and server. Strongly recommended to allow Nagios components to work properly. Caution: firewall rules are managed by `puppetlabs/firewall`. That module purges any firewall rules that are *not* managed with `puppetlabs/firewall` so be extremely careful before enabling this option. Default: `false`
+Manage firewall rules on Nagios clients and server. Strongly recommended to allow Nagios components to work properly. Caution: firewall rules are managed by [`puppetlabs/firewall`](https://forge.puppet.com/puppetlabs/firewall). That module purges any firewall rules that are *not* managed with `puppetlabs/firewall` so be extremely careful before enabling this option. Default: `false`
 
 #### `url`
 Override the hostname that your Nagios server will run on, if you don't want it to run on the server's `$::fqdn`. Default: `$::fqdn`
