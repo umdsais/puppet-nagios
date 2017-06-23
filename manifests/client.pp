@@ -49,11 +49,6 @@ class nagios::client (
       ensure  => installed,
       require => Class['epel'],
     }
-
-    package { 'nagios-plugins-check-tcptraffic':
-      ensure  => installed,
-      require => Yumrepo['resnet'],
-    }
   }
 
   if $::operatingsystem == 'Ubuntu' {
