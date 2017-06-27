@@ -259,13 +259,6 @@ class nagios::server (
   nagios::icon { 'SLES': }
   nagios::icon { 'idrac': }
 
-  # Grab unified users from Hiera
-  $unifiedusers = hiera('unifiedusers')
-
-  # Turn all hiera users & groups into virtual users 
-  # & groups which will later be selectively realised
-  create_resources('nagios::user', $unifiedusers)
-
   # collect resources and populate /etc/nagios/nagios_*.cfg
   Nagios_host <<| |>> {
     require        => Package['nagios'],
