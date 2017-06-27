@@ -34,15 +34,10 @@ class nagios::server (
   }
 
 
-  include ::mod_auth_cas
   include ::apache::mod::cgi
   include ::apache::mod::php
   include ::apache::mod::rewrite
   include ::nagios
-  include ::nagios::client
-  include ::nagios::commands
-  include ::nagios::manual
-  include ::nagios::aggregates
   include ::nagios::templates
 
   # Install Nagios package
