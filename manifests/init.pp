@@ -27,23 +27,36 @@ class nagios (
   # Configure Nagios client
   if ($client) {
     class { '::nagios::client':
-      nrpe     => $nrpe,
-      nsca     => $nsca,
-      selinux  => $selinux,
-      firewall => $firewall,
+      nrpe                => $nrpe,
+      nsca                => $nsca,
+      selinux             => $selinux,
+      firewall            => $firewall,
+      nsca_client_package => $nsca_client_package,
+      nrpe_package        => $nrpe_package,
+      nrpe_service        => $nrpe_service,
+      nrpe_config         => $nrpe_config,
+      nrpe_d              => $nrpe_d,
     }
   }
 
   # Configure Nagios server
   if ($server) {
     class { '::nagios::server':
-      url      => $url,
-      nrpe     => $nrpe,
-      nsca     => $nsca,
-      selinux  => $selinux,
-      firewall => $firewall,
-      webroot  => $webroot,
-      cgiroot  => $cgiroot,
+      url                 => $url,
+      nrpe                => $nrpe,
+      nsca                => $nsca,
+      selinux             => $selinux,
+      firewall            => $firewall,
+      webroot             => $webroot,
+      cgiroot             => $cgiroot,
+      dev                 => $dev
+      nagios_package      => $nagios_package,
+      nagios_service      => $nagios_service,
+      serveradmin         => $serveradmin,
+      nsca_server_package => $nsca_server_package,
+      nsca_service        => $nsca_service,
+      nsca_config         => $nsca_config,
+      nrpe_plugin_package => $nrpe_plugin_package,
     }
   }
 }
