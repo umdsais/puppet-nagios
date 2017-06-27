@@ -49,7 +49,7 @@ class nagios (
       firewall            => $firewall,
       webroot             => $webroot,
       cgiroot             => $cgiroot,
-      dev                 => $dev
+      dev                 => $dev,
       nagios_package      => $nagios_package,
       nagios_service      => $nagios_service,
       serveradmin         => $serveradmin,
