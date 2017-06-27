@@ -24,7 +24,7 @@ class nagios (
   $serveradmin         = 'root@localhost',
   $ssl_cert            = '/path/to/cert.crt',
   $ssl_key             = '/path/to/key.key',
-  $ssl_chain           = '/path/to/chain.crt',
+  $ssl_chain           = undef,
 
 ) inherits nagios::params {
 
