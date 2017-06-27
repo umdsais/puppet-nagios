@@ -263,64 +263,64 @@ class nagios::server (
   nagios::icon { 'idrac': }
 
   # collect resources and populate /etc/nagios/nagios_*.cfg
-  Nagios_host <<| |>> {
+  Nagios_host <<| tag == 'nagios' |>> {
     require        => Package['nagios'],
     notify         => Service['nagios'],
     owner          => 'root',
     group          => 'nagios',
     mode           => '0644',
   }
-  Nagios_service <<| |>> {
+  Nagios_service <<| tag == 'nagios' |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
     owner   => 'root',
     group   => 'nagios',
     mode    => '0644',
   }
-  Nagios_servicedependency <<| |>> {
+  Nagios_servicedependency <<| tag == 'nagios' |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
     owner   => 'root',
     group   => 'nagios',
     mode    => '0644',
   }
-  Nagios_contact <<| |>> {
+  Nagios_contact <<| tag == 'nagios' |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
     owner   => 'root',
     group   => 'nagios',
     mode    => '0644',
   }
-  Nagios_contactgroup <<| |>> {
+  Nagios_contactgroup <<| tag == 'nagios' |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
     owner   => 'root',
     group   => 'nagios',
     mode    => '0644',
   }
-  Nagios_servicegroup <<| |>> {
+  Nagios_servicegroup <<| tag == 'nagios' |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
     owner   => 'root',
     group   => 'nagios',
     mode    => '0644',
   }
-  Uob_nagios::Create_servicegroup <<| |>> {
+  Uob_nagios::Create_servicegroup <<| tag == 'nagios' |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
   }
-  Nagios_hostgroup <<| |>> {
+  Nagios_hostgroup <<| tag == 'nagios' |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
     owner   => 'root',
     group   => 'nagios',
     mode    => '0644',
   }
-  Uob_nagios::Create_hostgroup <<| |>> {
+  Uob_nagios::Create_hostgroup <<| tag == 'nagios' |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
   }
-  Nagios_command <<| |>> {
+  Nagios_command <<| tag == 'nagios' |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
     owner   => 'root',
@@ -363,6 +363,7 @@ class nagios::server (
   @@nagios::create_servicegroup { "${::fqdn}-nagios":
     groupname  => 'nagios',
     groupalias => 'Nagios',
+    tag        => 'nagios',
   }
 
   #### NAGIOS SERVICE
@@ -370,6 +371,7 @@ class nagios::server (
     check_command       => 'check_nagios!/var/log/nagios/nagios.log!/usr/sbin/nagios',
     service_description => 'Nagios',
     servicegroups       => 'nagios',
+    tag                 => 'nagios',
   }
 
   #### NAGIOS STATS
@@ -377,6 +379,7 @@ class nagios::server (
     check_command       => 'check_nagiostats',
     service_description => 'Nagios stats',
     servicegroups       => 'nagios',
+    tag                 => 'nagios',
   }
 
   #### NAGIOS CONFIG
@@ -403,6 +406,7 @@ class nagios::server (
     freshness_threshold   => 172800,
     check_command         => 'check_dummy!1 "No passive checks for at least 48h"',
     servicegroups         => 'nagios',
+    tag                   => 'nagios',
   }
 
   # Add a snippet to motd
