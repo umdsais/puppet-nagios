@@ -200,9 +200,9 @@ class nagios::server (
 
   # Install SELinux Nagios policy
   if ($selinux) {
-    selinux::module { 'resnet-nagios':
+    selinux::module { 'nagios':
       ensure    => 'present',
-      source_te => 'puppet:///modules/nagios/resnet-nagios.te',
+      source_te => 'puppet:///modules/nagios/nagios.te',
     }
   }
 

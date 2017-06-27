@@ -1,4 +1,4 @@
-module resnet-nrpe 1.54;
+module nrpe 1.54;
 
 require {
 	type admin_home_t;

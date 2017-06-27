@@ -21,7 +21,7 @@ class nagios (
   $nsca_config         = $nagios::params::nsca_config,
   $nagios_package      = $nagios::params::nagios_package,
   $nagios_service      = $nagios::params::nagios_service,
-  $serveradmin         = $nagios::params::serveradmin,
+  $serveradmin         = 'root@localhost',
 ) inherits nagios::params {
 
   # Configure Nagios client
