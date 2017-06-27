@@ -22,6 +22,10 @@ class nagios (
   $nagios_package      = $nagios::params::nagios_package,
   $nagios_service      = $nagios::params::nagios_service,
   $serveradmin         = 'root@localhost',
+  $ssl_cert            = '/path/to/cert.crt',
+  $ssl_key             = '/path/to/key.key',
+  $ssl_chain           = '/path/to/chain.crt',
+
 ) inherits nagios::params {
 
   # Configure Nagios client
@@ -57,6 +61,9 @@ class nagios (
       nsca_service        => $nsca_service,
       nsca_config         => $nsca_config,
       nrpe_plugin_package => $nrpe_plugin_package,
+      ssl_cert            => $ssl_cert,
+      ssl_key             => $ssl_key,
+      ssl_chain           => $ssl_chain
     }
   }
 }

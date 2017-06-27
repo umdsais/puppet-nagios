@@ -15,6 +15,9 @@ class nagios::server (
   $nrpe_plugin_package,
   $webroot,
   $cgiroot,
+  $ssl_cert,
+  $ssl_key,
+  $ssl_chain,
 ) {
 
   if ($nsca) {
@@ -69,9 +72,9 @@ class nagios::server (
     docroot              => $cgiroot,
     notify               => Service['httpd'],
     ssl                  => true,
-    ssl_cert             => '/path/to/cert.crt',
-    ssl_key              => '/path/to/key.key',
-    ssl_chain            => '/path/to/chain.crt',
+    ssl_cert             => $ssl_cert,
+    ssl_key              => $ssl_key,
+    ssl_chain            => $ssl_chain,
     serveradmin          => $serveradmin,
     directoryindex       => 'index.php',
     setenvif             => 'User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown',
