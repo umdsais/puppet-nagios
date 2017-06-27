@@ -1,8 +1,6 @@
 # Standard nagios group templates
 class nagios::templates {
 
-  $contacts = concat(hiera_array('contact'), 'slack')
-
   # Contact templates
   nagios_contact { 'generic-contact':
     service_notification_period   => '24x7',
@@ -39,7 +37,6 @@ class nagios::templates {
     check_command                => 'check-host-alive',
     notification_interval        => '0',
     notification_options         => 'd,r',
-    contacts                     => inline_template("<%= @contacts.join(',') %>"),
   }
 
   nagios_host { 'agregate-host':
