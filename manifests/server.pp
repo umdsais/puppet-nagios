@@ -198,9 +198,9 @@ class nagios::server (
 
   # Install SELinux Nagios policy
   if ($selinux) {
-    selinux::module { 'nagios':
+    selinux::module { 'puppet-nagios':
       ensure    => 'present',
-      source_te => 'puppet:///modules/nagios/nagios.te',
+      source_te => 'puppet:///modules/nagios/puppet-nagios.te',
     }
   }
 

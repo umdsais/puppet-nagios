@@ -1,4 +1,4 @@
-module nagios 1.8;
+module puppet-nagios 1.8;
 
 require {
 	type httpd_t;
