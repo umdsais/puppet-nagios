@@ -408,7 +408,4 @@ class nagios::server (
     servicegroups         => 'nagios',
     tag                   => 'nagios',
   }
-
-  # Add a snippet to motd
-  motd::register{'Nagios monitoring for everything': }
 }
