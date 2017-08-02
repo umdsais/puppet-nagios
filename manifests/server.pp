@@ -220,7 +220,7 @@ class nagios::server (
     mode    => '0644',
     owner   => 'root',
     group   => 'nagios',
-    content => template("nagios/nagios.cfg.${nagver}.erb"),
+    content => template("nagios/nagios.cfg.4.erb"),
     require => Package['nagios'],
     notify  => Service['nagios'],
     before  => Service['nagios'],
