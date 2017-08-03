@@ -305,7 +305,7 @@ class nagios::server (
     group   => 'nagios',
     mode    => '0644',
   }
-  Nagios::Create_servicegroup <<| tag == $::fqdn |>> {
+  Nagios::Servicegroup <<| tag == $::fqdn |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
   }
@@ -360,17 +360,10 @@ class nagios::server (
   # Problably only useful if >1 nagios server
   # Chicken <=> Egg, anyone?
 
-  @@nagios::create_servicegroup { "${::fqdn}-nagios":
-    groupname  => 'nagios',
-    groupalias => 'Nagios',
-    tag        => 'nagios',
-  }
-
   #### NAGIOS SERVICE
   @@nagios_service { "check_nagios_${::fqdn}":
     check_command       => 'check_nagios!/var/log/nagios/nagios.log!/usr/sbin/nagios',
     service_description => 'Nagios',
-    servicegroups       => 'nagios',
     tag                 => 'nagios',
   }
 
@@ -378,7 +371,6 @@ class nagios::server (
   @@nagios_service { "check_nagiostats_${::fqdn}":
     check_command       => 'check_nagiostats',
     service_description => 'Nagios stats',
-    servicegroups       => 'nagios',
     tag                 => 'nagios',
   }
 
@@ -405,7 +397,6 @@ class nagios::server (
     check_freshness       => 1,
     freshness_threshold   => 172800,
     check_command         => 'check_dummy!1 "No passive checks for at least 48h"',
-    servicegroups         => 'nagios',
     tag                   => 'nagios',
   }
 }
