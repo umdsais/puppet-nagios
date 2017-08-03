@@ -1,6 +1,6 @@
 # Short defined type which is used by clients to create suitable Nagios servicegroups
 # for themselves as exported resources without risk of duplication
-define nagios::create_servicegroup (
+define nagios::servicegroup (
   $groupname,
   $groupalias = undef,
 ) {
