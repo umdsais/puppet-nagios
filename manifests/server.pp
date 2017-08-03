@@ -305,7 +305,7 @@ class nagios::server (
     group   => 'nagios',
     mode    => '0644',
   }
-  Uob_nagios::Create_servicegroup <<| tag == $::fqdn |>> {
+  Nagios::Create_servicegroup <<| tag == $::fqdn |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
   }
@@ -316,7 +316,7 @@ class nagios::server (
     group   => 'nagios',
     mode    => '0644',
   }
-  Uob_nagios::Create_hostgroup <<| tag == $::fqdn |>> {
+  Nagios::Create_hostgroup <<| tag == $::fqdn |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
   }
