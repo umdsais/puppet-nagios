@@ -3,7 +3,7 @@
 define nagios::service (
   $check_command,
   $service_description,
-  $use,
+  $use = undef,
   $add_servicegroup = true,
   $add_servicedep = true,
   $active_checks_enabled = undef,
