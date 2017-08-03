@@ -263,64 +263,64 @@ class nagios::server (
   nagios::icon { 'idrac': }
 
   # collect resources and populate /etc/nagios/nagios_*.cfg
-  Nagios_host <<| tag == 'nagios' |>> {
+  Nagios_host <<| tag == $::fqdn |>> {
     require        => Package['nagios'],
     notify         => Service['nagios'],
     owner          => 'root',
     group          => 'nagios',
     mode           => '0644',
   }
-  Nagios_service <<| tag == 'nagios' |>> {
+  Nagios_service <<| tag == $::fqdn |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
     owner   => 'root',
     group   => 'nagios',
     mode    => '0644',
   }
-  Nagios_servicedependency <<| tag == 'nagios' |>> {
+  Nagios_servicedependency <<| tag == $::fqdn |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
     owner   => 'root',
     group   => 'nagios',
     mode    => '0644',
   }
-  Nagios_contact <<| tag == 'nagios' |>> {
+  Nagios_contact <<| tag == $::fqdn |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
     owner   => 'root',
     group   => 'nagios',
     mode    => '0644',
   }
-  Nagios_contactgroup <<| tag == 'nagios' |>> {
+  Nagios_contactgroup <<| tag == $::fqdn |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
     owner   => 'root',
     group   => 'nagios',
     mode    => '0644',
   }
-  Nagios_servicegroup <<| tag == 'nagios' |>> {
+  Nagios_servicegroup <<| tag == $::fqdn |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
     owner   => 'root',
     group   => 'nagios',
     mode    => '0644',
   }
-  Uob_nagios::Create_servicegroup <<| tag == 'nagios' |>> {
+  Uob_nagios::Create_servicegroup <<| tag == $::fqdn |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
   }
-  Nagios_hostgroup <<| tag == 'nagios' |>> {
+  Nagios_hostgroup <<| tag == $::fqdn |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
     owner   => 'root',
     group   => 'nagios',
     mode    => '0644',
   }
-  Uob_nagios::Create_hostgroup <<| tag == 'nagios' |>> {
+  Uob_nagios::Create_hostgroup <<| tag == $::fqdn |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
   }
-  Nagios_command <<| tag == 'nagios' |>> {
+  Nagios_command <<| tag == $::fqdn |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
     owner   => 'root',
