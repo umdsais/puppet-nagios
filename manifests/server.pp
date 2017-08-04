@@ -56,6 +56,15 @@ class nagios::server (
     ensure  => installed,
   }
 
+  # Create firewall exception
+  if ($firewall) {
+    firewall { '100-nagios':
+      proto  => 'tcp',
+      dport  => ['443','80'],
+      action => 'accept',
+    }
+  }
+
   # Non-SSL redirect
   ::apache::vhost { "${url}-http":
     servername      => $url,
