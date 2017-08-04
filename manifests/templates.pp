@@ -37,6 +37,7 @@ class nagios::templates {
     check_command                => 'check-host-alive',
     notification_interval        => '0',
     notification_options         => 'd,r',
+    contact_groups               => 'users',
   }
 
   nagios_host { 'agregate-host':
