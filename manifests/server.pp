@@ -382,30 +382,4 @@ class nagios::server (
     service_description => 'Nagios stats',
     tag                 => 'nagios',
   }
-
-  #### NAGIOS CONFIG
-  # Check the config every time Nagios is restarted
-  exec { 'check_nagios_config_passive':
-    command     => '/usr/lib64/nagios/plugins/check_nagios_config_passive',
-    refreshonly => true,
-    subscribe   => Service['nagios'],
-  }
-
-  # Also run the check every hour, so the passive check can't get stale
-  file { 'check_nagios_config_passive_symlink':
-    ensure => link,
-    name   => '/etc/cron.hourly/check_nagios_config_passive',
-    target => '/usr/lib64/nagios/plugins/check_nagios_config_passive',
-  }
-
-  # Passive Nagios service definition for the above
-  @@nagios_service { "check_nagios_config_${::fqdn}":
-    service_description   => 'Nagios config',
-    active_checks_enabled => 0,
-    max_check_attempts    => 1,
-    check_freshness       => 1,
-    freshness_threshold   => 172800,
-    check_command         => 'check_dummy!1 "No passive checks for at least 48h"',
-    tag                   => 'nagios',
-  }
 }
