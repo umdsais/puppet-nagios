@@ -25,6 +25,7 @@ class nagios (
   $ssl_cert            = '/path/to/cert.crt',
   $ssl_key             = '/path/to/key.key',
   $ssl_chain           = undef,
+  $auth_type           = 'basic',
 
 ) inherits nagios::params {
 
@@ -63,7 +64,8 @@ class nagios (
       nrpe_plugin_package => $nrpe_plugin_package,
       ssl_cert            => $ssl_cert,
       ssl_key             => $ssl_key,
-      ssl_chain           => $ssl_chain
+      ssl_chain           => $ssl_chain,
+      auth_type           => $auth_type,
     }
   }
 }

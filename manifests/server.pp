@@ -18,6 +18,7 @@ class nagios::server (
   $ssl_cert,
   $ssl_key,
   $ssl_chain,
+  $auth_type = 'basic',
 ) {
 
   if ($nsca) {
@@ -116,7 +117,7 @@ class nagios::server (
         allow_override => 'All',
         order          => 'Allow,Deny',
         allow          => 'from All',
-        auth_type      => 'CAS',
+        auth_type      => $auth_type,
         auth_require   => 'valid-user local',
       },
       {
@@ -125,7 +126,7 @@ class nagios::server (
         allow_override => 'All',
         order          => 'Allow,Deny',
         allow          => 'from All',
-        auth_type      => 'CAS',
+        auth_type      => $auth_type,
         auth_require   => 'valid-user',
       },
       {
@@ -134,7 +135,7 @@ class nagios::server (
         allow_override => 'All',
         order          => 'Allow,Deny',
         allow          => 'from All',
-        auth_type      => 'CAS',
+        auth_type      => $auth_type,
         auth_require   => 'valid-user',
       },
       {
@@ -142,7 +143,7 @@ class nagios::server (
         allow_override => 'None',
         order          => 'Allow,Deny',
         allow          => 'from All',
-        auth_type      => 'CAS',
+        auth_type      => $auth_type,
         auth_require   => 'valid-user',
         options        => 'FollowSymLinks',
         rewrites       => [
