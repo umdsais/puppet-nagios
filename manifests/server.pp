@@ -119,6 +119,7 @@ class nagios::server (
         allow          => 'from All',
         auth_type      => $auth_type,
         auth_require   => 'valid-user local',
+        auth_name      => 'Nagios',
       },
       {
         path           => $webroot,
@@ -128,6 +129,7 @@ class nagios::server (
         allow          => 'from All',
         auth_type      => $auth_type,
         auth_require   => 'valid-user',
+        auth_name      => 'Nagios',
       },
       {
         path           => "${webroot}/bpi",
@@ -137,6 +139,7 @@ class nagios::server (
         allow          => 'from All',
         auth_type      => $auth_type,
         auth_require   => 'valid-user',
+        auth_name      => 'Nagios',
       },
       {
         path           => "${webroot}/pnp4nagios/",
@@ -145,6 +148,7 @@ class nagios::server (
         allow          => 'from All',
         auth_type      => $auth_type,
         auth_require   => 'valid-user',
+        auth_name      => 'Nagios',
         options        => 'FollowSymLinks',
         rewrites       => [
           {
