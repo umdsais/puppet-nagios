@@ -5,5 +5,12 @@ define nagios::servicegroup (
   $groupalias = undef,
   $target,
 ) {
-  ensure_resource('nagios_servicegroup', $groupname, {'alias' => $groupalias, 'ensure' => 'present', 'target' => $target,})
+  ensure_resource('nagios_servicegroup', $groupname, {
+    'alias'  => $groupalias,
+    'ensure' => 'present',
+    'target' => $target,
+    'owner'  => 'root',
+    'group'  => 'nagios',
+    'mode'   => '0644',
+  })
 }
