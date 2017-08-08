@@ -87,7 +87,7 @@ class nagios::client (
     icon_image      => "${::operatingsystem}.png",
     statusmap_image => "${::operatingsystem}.gd2",
     tag             => 'nagios',
-    target          => "${::fqdn}-host.cfg",
+    target          => "/etc/nagios/conf.d/${::fqdn}-host.cfg",
   }
 
   #### NRPE
