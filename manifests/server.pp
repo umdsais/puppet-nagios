@@ -50,6 +50,15 @@ class nagios::server (
     name   => $nagios_package,
   }
 
+  # Create extra config directory
+  file { '/etc/nagios/conf.d':
+    ensure => directory,
+    owner  => 'root',
+    group  => 'nagios',
+    mode   => '0755',
+    purge  => true,
+  }
+
   # Install nagios and other necessary packages
   package { [
     'pnp4nagios',

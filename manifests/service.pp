@@ -22,6 +22,7 @@ define nagios::service (
     max_check_attempts    => $max_check_attempts,
     check_freshness       => $check_freshness,
     freshness_threshold   => $freshness_threshold,
+    target                => "${::fqdn}-service-${title}.cfg",
   }
 
   # Also configure a nagios_servicegroup for this service
@@ -29,6 +30,7 @@ define nagios::service (
     groupname  => $title,
     groupalias => $service_description,
     tag        => hiera('nagios_server'),
+    target     => "${::fqdn}-servicegroup-${title}.cfg",
   }
 
   # Configure a nagios_servicedependency if this is a NRPE check
@@ -38,6 +40,7 @@ define nagios::service (
       dependent_service_description => $service_description,
       service_description           => 'NRPE',
       tag                           => hiera('nagios_server'),
+      target                        => "${::fqdn}-servicedependency-${title}.cfg",
     }
   }
 }
