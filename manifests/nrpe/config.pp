@@ -6,7 +6,7 @@ define nagios::nrpe::config(
   $sudo = undef,
   $sudo_user = 'root',
   $ensure = present,
-  $nrpe_d $::nagios::params::nrpe_d,
+  $nrpe_d = $::nagios::params::nrpe_d,
 ) {
 
   if ! ($ensure in [ 'present', 'absent' ]) {
