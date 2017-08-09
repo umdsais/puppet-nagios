@@ -5,6 +5,11 @@
 1. [Overview](#overview)
 2. [Module Description - What the module does and why it is useful](#module-description)
 3. [Usage - Configuration options and additional functionality](#usage)
+    * [Classes](#classes)
+       * [nagios](#nagios)
+       * [nagios::client](#nagiosclient)
+    * [Resources](#resources)
+       * [nagios::service](#nagiosservice)
 4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 5. [Limitations - OS compatibility, etc.](#limitations)
 6. [Development - Guide for contributing to the module](#development)
@@ -68,76 +73,83 @@ Some Nagios plugins return performance data as well as a status code. Out of the
 
 ## Usage
 
-This module is designed so the base class `::nagios` is a single point of entry for all private classes. The private classes are included where necessary, by the base class. There are also some defined types which should be directly called where necessary to configure extras.
+This module is designed so the base class `::nagios` configures a Nagios monitoring server. Other classes are available such as `::nagios::client` which configures a Nagios client to be monitored. There are also some defined types which should be directly called where necessary to configure extras.
 
-### `::nagios`
+### Classes
 
-#### `client`
+#### `::nagios`
+
+##### `client`
 Install components to run a Nagios client, i.e. a server that is monitored. Default: `true`
 
-#### `server`
+##### `server`
 Install components to run a Nagios monitoring server. Default: `false`
 
-#### `nrpe`
+##### `nrpe`
 Install support for NRPE, which is required if you want to execute Nagios checks on remote servers (clients). Default: `false`
 
-#### `nsca`
+##### `nsca`
 Install support for NSCA, which is required if you want to execute passive Nagios checks. Default: `false`
 
-#### `selinux`
+##### `selinux`
 Manage SELinux rules to allow Nagios components to run properly on the clients and server. Strongly recommended if you are running a Red Hat family distro, and SELinux is enabled on your system. Requires [`puppet/selinux`](https://forge.puppet.com/puppet/selinux). Default: `false`
 
-#### `firewall`
+##### `firewall`
 Manage firewall rules on Nagios clients and server. Strongly recommended to allow Nagios components to work properly. Caution: firewall rules are managed by [`puppetlabs/firewall`](https://forge.puppet.com/puppetlabs/firewall). That module purges any firewall rules that are *not* managed with `puppetlabs/firewall` so be extremely careful before enabling this option. Default: `false`
 
-#### `url`
+##### `url`
 Override the hostname that your Nagios server will run on, if you don't want it to run on the server's `$::fqdn`. Default: `$::fqdn`
 
-#### `dev`
+##### `dev`
 Set a flag to mark this Nagios server as a development/testing server. This suppresses active notifications from Nagios. Default: `false`
 
-#### `serveradmin`
+##### `serveradmin`
 Server admin email address for use by Apache. Default: `root@localhost`
 
-#### `nrpe_package`
+##### `nrpe_package`
 Name of the NRPE package. You *shouldn't* need to override this. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 
-#### `webroot`
+##### `webroot`
 Location of the webroot on the filesystem. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 
-#### `cgiroot`
+##### `cgiroot`
 Location of the CGI root on the filesystem. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 
-#### `nsca_client_package`
+##### `nsca_client_package`
 Name of the NSCA client package. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 
-#### `nrpe_service`
+##### `nrpe_service`
 Name of the NRPE service. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 
-#### `nrpe_config`
+##### `nrpe_config`
 Path to the NRPE config file. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 
-#### `nrpe_d`
+##### `nrpe_d`
 Path to the NRPE conf.d directory. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 
-#### `nrpe_plugin_package`
+##### `nrpe_plugin_package`
 Name of the NRPE plugin package. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 
-#### `nsca_server_package`
+##### `nsca_server_package`
 Name of the NSCA server package. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 
-#### `nsca_service`
+##### `nsca_service`
 Name of the NSCA service. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 
-#### `nsca_config`
+##### `nsca_config`
 Path to the NSCA config file. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 
-#### `nagios_package`
+##### `nagios_package`
 Name of the Nagios package. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 
-#### `nagios_service`
+##### `nagios_service`
 Name of the Nagios service. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 
+#### `::nagios::client`
+
+### Defined types
+
+#### `nagios::service`
 
 ## Reference
 
