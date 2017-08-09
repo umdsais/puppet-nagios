@@ -17,11 +17,11 @@ This module installs and manages [Nagios](https://www.nagios.org/), [NRPE](https
 
 While Nagios itself is not too complex, a full stack installation includes a number of optional components. Let's have a look at the terminology - if you are new to Nagios you should definitely read and understand the definitions before attempting to use this module.
 
-This module is quite opinionated about how Nagios should be set up. I've made it as configurable as I can without deviating from the model that I believe is best, which has been extensively tested in our local environment before publishing.
+This module is quite opinionated about how Nagios should be set up. I've made it as configurable as I can without deviating from the model that I believe is best, which has been extensively tested in our local environment before publishing. It makes assumptions about how you want to group things that mean you can start benefiting from Nagios quickly without having to set too much up.
 
 This module makes heavy use of [Puppet exported resources](https://docs.puppet.com/puppet/4.10/lang_exported.html) to configure Nagios. You **must** have a working Puppet and PuppetDB environment with exported resources before using this module.
 
-**Warning**: This module uses [`puppetlabs/apache`](https://forge.puppet.com/puppetlabs/apache) to configure the web frontend. Be aware that `puppetlabs/apache` will **purge** all other Apache config that is not managed with `puppetlabs/apache`. This Nagios module with play nicely with other web sites configured with `apache::vhost` but it will break anything else.
+**Warning**: This module uses [`puppetlabs/apache`](https://forge.puppet.com/puppetlabs/apache) to configure the web frontend. Be aware that `puppetlabs/apache` will **purge** all other Apache config that is not managed with `puppetlabs/apache`. This Nagios module with play nicely with other web sites configured with `apache::vhost` but it will break anything else that has been configured manually.
 
 ### Nagios
 
