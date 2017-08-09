@@ -12,14 +12,6 @@ class nagios::templates {
     register                      => '0',
   }
 
-  # Contactgroup templates
-  nagios_contactgroup { 'admins':
-    alias => 'Nagios Administrators',
-  }
-  nagios_contactgroup { 'users':
-    alias => 'Nagios Users',
-  }
-
   # Host templates
   nagios_host { 'generic-host':
     notifications_enabled        => '1',

@@ -3,14 +3,15 @@ define nagios::user (
   $alias=undef,
   $email=undef,
   $use = 'generic-contact',
-  $ensure=present
+  $ensure=present,
+  $contactgroups = undef,
 ) {
   # create nagios user
   nagios_contact { $name:
     ensure        => $ensure,
-    contactgroups => 'admins',
+    contactgroups => $contactgroups,
     alias         => $alias,
-    use           => 'generic-contact',
+    use           => $use,
     email         => $email,
     tag           => hiera('nagios_server'),
   }
