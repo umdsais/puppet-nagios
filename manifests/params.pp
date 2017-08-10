@@ -39,6 +39,7 @@ class nagios::params {
 
   $nrpe_plugin_package = $::osfamily ? {
     'RedHat' => 'nagios-plugins-nrpe',
+    'Debian' => 'nagios-nrpe-plugin',
   }
 
   $nsca_client_package = $::osfamily ? {
@@ -63,6 +64,11 @@ class nagios::params {
     'RedHat' => '/etc/nagios/nsca.cfg',
     'Debian' => '/etc/nagios/nsca.cfg',
     default  => '/etc/nagios/nsca.cfg',
+  }
+
+  $plugin_package = $::osfamily ? {
+    'RedHat' => 'nagios-plugins-all',
+    'Debian' => 'monitoring-plugins',
   }
 
   $webroot = $::osfamily ? {
