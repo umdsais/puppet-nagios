@@ -1,9 +1,9 @@
 # Configures nagios client and sets up basic checks
 class nagios::client (
-  $nrpe                = false,
-  $nsca                = false,
-  $selinux             = false,
-  $firewall            = false,
+  $nrpe                = true,
+  $nsca                = true,
+  $selinux             = true,
+  $firewall            = true,
   $url                 = $::fqdn,
   $nrpe_package        = $nagios::params::nrpe_package,
   $webroot             = $nagios::params::webroot,

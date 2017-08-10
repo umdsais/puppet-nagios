@@ -1,10 +1,9 @@
 # Nagios config for monitoring servers
 class nagios (
-  $server              = false,
-  $nrpe                = false,
-  $nsca                = false,
-  $selinux             = false,
-  $firewall            = false,
+  $nrpe                = true,
+  $nsca                = true,
+  $selinux             = true,
+  $firewall            = true,
   $url                 = $::fqdn,
   $nrpe_package        = $nagios::params::nrpe_package,
   $webroot             = $nagios::params::webroot,
