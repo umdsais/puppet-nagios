@@ -79,6 +79,8 @@ This module is designed so the base class `::nagios` configures a Nagios monitor
 
 #### `::nagios`
 
+The `::nagios` class installs a Nagios monitoring server and related components.
+
 ##### `client`
 Install components to run a Nagios client, i.e. a server that is monitored. Default: `true`
 
@@ -146,6 +148,8 @@ Name of the Nagios package. If you need to add support for a new distro, please 
 Name of the Nagios service. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 
 #### `::nagios::client`
+
+The `::nagios::client` class installs components needed for a system to be monitored by a Nagios monitoring server.
 
 ### Defined types
 
