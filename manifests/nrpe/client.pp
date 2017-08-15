@@ -7,6 +7,10 @@ class nagios::nrpe::client (
   $selinux,
 ) {
 
+  # Find our Nagios server(s)
+  $nagios_server = hiera('nagios_server')
+  $nagios_server_list = join($nagios_server, ',')
+
   package { 'nrpe':
     ensure  => installed,
     name    => $nrpe_package,
@@ -49,7 +53,7 @@ class nagios::nrpe::client (
     mode    => '0755',
     owner   => 'root',
     group   => 'root',
-    source  => 'puppet:///modules/nagios/nrpe/nrpe.cfg',
+    content => template('nagios/nrpe.cfg.erb'),
     require => Package['nrpe'],
     notify  => Service['nrpe'],
   }
