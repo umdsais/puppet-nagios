@@ -8,7 +8,7 @@ class nagios::nrpe::client (
 ) {
 
   # Find our Nagios server(s)
-  $nagios_server = hiera('nagios_server')
+  $nagios_server = hiera_array('nagios_server')
   $nagios_server_list = join($nagios_server, ',')
 
   package { 'nrpe':
