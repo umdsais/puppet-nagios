@@ -54,8 +54,6 @@ class nagios::client (
   # revert the commits within MR !664
   # https://git.services.bristol.ac.uk/resnet/resnet-puppet/merge_requests/664
 
-  include ::nagios
-
   if $::osfamily == 'RedHat' {
     package { ['nagios-plugins',
       'nagios-plugins-all',
