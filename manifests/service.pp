@@ -14,6 +14,7 @@ define nagios::service (
 ) {
   # Pass on various params to nagios_service
   @@nagios_service { "${title}-${host_name}":
+    host_name             => $host_name,
     check_command         => $check_command,
     service_description   => $service_description,
     use                   => $use,
