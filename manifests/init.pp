@@ -11,7 +11,6 @@ class nagios (
   $dev                 = false,
   $nsca_client_package = $nagios::params::nsca_client_package,
   $nrpe_service        = $nagios::params::nrpe_service,
-  $nrpe_config         = $nagios::params::nrpe_config,
   $nrpe_d              = $nagios::params::nrpe_d,
   $nrpe_plugin_package = $nagios::params::nrpe_plugin_package,
   $nsca_server_package = $nagios::params::nsca_server_package,

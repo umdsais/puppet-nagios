@@ -24,7 +24,7 @@ class nagios::client (
   $ssl_key             = '/path/to/key.key',
   $ssl_chain           = undef,
   $auth_type           = 'basic',
-) {
+) inherits nagios::params {
 
   if ($nsca) {
     class { '::nagios::nsca::client':
