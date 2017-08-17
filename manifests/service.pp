@@ -32,7 +32,6 @@ define nagios::service (
     groupname  => $title,
     groupalias => $service_description,
     tag        => hiera('nagios_server'),
-    target     => "/etc/nagios/conf.d/${host_name}-servicegroup-${title}.cfg",
   }
 
   # Configure a nagios_servicedependency if this is a NRPE check
