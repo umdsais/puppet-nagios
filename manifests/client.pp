@@ -81,15 +81,15 @@ class nagios::client (
   }
 
   # Create a hostgroup for our platform
-  @@nagios::hostgroup { "${::fqdn}-physical":
-    hostgroup      => downcase($::physical),
-    hostgroupalias => $::physical,
+  @@nagios::hostgroup { "${::fqdn}-virtual":
+    hostgroup      => downcase($::virtual),
+    hostgroupalias => $::virtual,
     tag            => hiera('nagios_server'),
   }
 
   $hostgroups = [
     downcase("${::operatingsystem}-${::operatingsystemmajrelease}"),
-    downcase($::physical),
+    downcase($::virtual),
   ]
 
   # Define the host in nagios, including parent hypervisor, if there is one
