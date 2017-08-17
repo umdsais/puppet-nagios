@@ -74,11 +74,23 @@ class nagios::client (
   }
 
   # Create a hostgroup for our OS
-  @@nagios::create_hostgroup { $::fqdn:
+  @@nagios::hostgroup { "${::fqdn}-os":
     hostgroup      => downcase("${::operatingsystem}-${::operatingsystemmajrelease}"),
     hostgroupalias => "${::operatingsystem} ${::operatingsystemmajrelease}",
     tag            => hiera('nagios_server'),
   }
+
+  # Create a hostgroup for our platform
+  @@nagios::hostgroup { "${::fqdn}-physical":
+    hostgroup      => downcase($::physical),
+    hostgroupalias => $::physical,
+    tag            => hiera('nagios_server'),
+  }
+
+  $hostgroups = [
+    downcase("${::operatingsystem}-${::operatingsystemmajrelease}"),
+    downcase($::physical),
+  ]
 
   # Define the host in nagios, including parent hypervisor, if there is one
   $ilom = hiera('ilom', undef)
@@ -95,7 +107,7 @@ class nagios::client (
     action_url      => "/nagios/pnp4nagios/graph?host=${::fqdn}",
     notes           => $ilomnotes,
     parents         => $parent,
-    hostgroups      => downcase("${::operatingsystem}-${::operatingsystemmajrelease}"),
+    hostgroups      => join($hostgroups, ','),
     icon_image_alt  => $::operatingsystem,
     icon_image      => "${::operatingsystem}.png",
     statusmap_image => "${::operatingsystem}.gd2",

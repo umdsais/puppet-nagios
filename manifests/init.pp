@@ -347,14 +347,7 @@ class nagios (
     require => Package['nagios'],
     notify  => Service['nagios'],
   }
-  Nagios_hostgroup <<| tag == $::fqdn |>> {
-    require => Package['nagios'],
-    notify  => Service['nagios'],
-    owner   => 'root',
-    group   => 'nagios',
-    mode    => '0644',
-  }
-  Nagios::Create_hostgroup <<| tag == $::fqdn |>> {
+  Nagios::Hostgroup <<| tag == $::fqdn |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
   }
