@@ -6,7 +6,7 @@ define nagios::hostgroup (
 ) {
   ensure_resource('nagios_hostgroup', $hostgroup, {
     'alias'  => $hostgroupalias,
-    'ensure' => 'present'
+    'ensure' => 'present',
     'owner'  => 'root',
     'group'  => 'nagios',
     'mode'   => '0644',
