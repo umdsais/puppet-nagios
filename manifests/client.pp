@@ -104,7 +104,7 @@ class nagios::client (
   }
 
   #### NRPE
-  nagios::service { "check_nrpe_${::fqdn}":
+  nagios::service { 'check_nrpe':
     check_command       => 'check_nrpe_status',
     service_description => 'NRPE',
     tag                 => hiera('nagios_server'),
