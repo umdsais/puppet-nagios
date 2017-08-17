@@ -77,7 +77,7 @@ class nagios::client (
   @@nagios::create_hostgroup { $::fqdn:
     hostgroup      => downcase("${::operatingsystem}-${::operatingsystemmajrelease}"),
     hostgroupalias => "${::operatingsystem} ${::operatingsystemmajrelease}",
-    tag            => 'nagios',
+    tag            => hiera('nagios_server'),
   }
 
   # Define the host in nagios, including parent hypervisor, if there is one
@@ -99,7 +99,7 @@ class nagios::client (
     icon_image_alt  => $::operatingsystem,
     icon_image      => "${::operatingsystem}.png",
     statusmap_image => "${::operatingsystem}.gd2",
-    tag             => 'nagios',
+    tag             => hiera('nagios_server'),
     target          => "/etc/nagios/conf.d/${::fqdn}-host.cfg",
   }
 
