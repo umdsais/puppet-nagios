@@ -56,11 +56,12 @@ class nagios (
 
   # Create extra config directory
   file { '/etc/nagios/conf.d':
-    ensure => directory,
-    owner  => 'root',
-    group  => 'nagios',
-    mode   => '0755',
-    purge  => true,
+    ensure  => directory,
+    owner   => 'root',
+    group   => 'nagios',
+    mode    => '0755',
+    purge   => true,
+    recurse => true,
   }
 
   # Install nagios and other necessary packages
