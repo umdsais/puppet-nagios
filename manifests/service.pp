@@ -28,20 +28,12 @@ define nagios::service (
   }
 
   # Also configure a nagios_servicegroup for this service
-#  @@nagios::servicegroup { "${title}-${host_name}":
-#    groupname  => $title,
-#    groupalias => $service_description,
-#    tag        => hiera('nagios_server'),
-#    target     => "/etc/nagios/conf.d/${host_name}-servicegroup-${title}.cfg",
-#  }
-  ensure_resource('@@nagios_servicegroup', $groupname, {
-    'alias'  => $groupalias,
-    'ensure' => 'present',
-    'target' => $target,
-    'owner'  => 'root',
-    'group'  => 'nagios',
-    'mode'   => '0644',
-  })
+  @@nagios::servicegroup { "${title}-${host_name}":
+    groupname  => $title,
+    groupalias => $service_description,
+    tag        => hiera('nagios_server'),
+    target     => "/etc/nagios/conf.d/${host_name}-servicegroup-${title}.cfg",
+  }
 
   # Configure a nagios_servicedependency if this is a NRPE check
   if ($check_command =~ /^check_nrpe!/) {
