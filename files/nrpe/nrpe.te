@@ -1,4 +1,4 @@
-module nrpe 1.54;
+module nrpe 1.55;
 
 require {
 	type admin_home_t;
@@ -226,6 +226,7 @@ allow nagios_services_plugin_t winbind_helper_exec_t:file { execute execute_no_t
 
 #============= nagios_system_plugin_t ==============
 allow nagios_system_plugin_t nagios_log_t:file { write };
+allow nagios_system_plugin_t nagios_services_plugin_exec_t:file { getattr };
 allow nagios_system_plugin_t nagios_tmp_t:file { append };
 allow nagios_system_plugin_t nrpe_t:tcp_socket { read write };
 allow nagios_system_plugin_t tmp_t:file { append };

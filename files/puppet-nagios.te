@@ -1,4 +1,4 @@
-module puppet-nagios 1.8;
+module puppet-nagios 1.9;
 
 require {
 	type httpd_t;
@@ -26,6 +26,7 @@ require {
 	class process { execmem execstack noatsecure rlimitinh siginh };
 	class tcp_socket { name_bind read write };
 	class unix_dgram_socket { ioctl };
+	class unix_stream_socket { connectto };
 }
 
 #============= httpd_t ==============
@@ -56,6 +57,7 @@ allow nagios_services_plugin_t var_t:file { open read };
 #============= nagios_t ==============
 allow nagios_t nagios_unconfined_plugin_t:process { noatsecure rlimitinh siginh };
 allow nagios_t self:capability { net_admin };
+allow nagios_t self:unix_stream_socket { connectto };
 
 #============= ping_t ==============
 allow ping_t nagios_t:fifo_file { read };
