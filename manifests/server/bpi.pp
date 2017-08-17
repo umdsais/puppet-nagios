@@ -1,5 +1,5 @@
 # Install the Nagios BPI addon
-class nagios::bpi (
+class nagios::server::bpi (
   $url,
   $selinux,
   $webroot,

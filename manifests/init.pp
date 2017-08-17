@@ -2,6 +2,7 @@
 class nagios (
   $nrpe                = true,
   $nsca                = true,
+  $bpi                 = false,
   $selinux             = true,
   $firewall            = true,
   $url                 = $::fqdn,
@@ -36,6 +37,14 @@ class nagios (
     class { '::nagios::nrpe::server':
       firewall            => $firewall,
       nrpe_plugin_package => $nrpe_plugin_package,
+    }
+  }
+
+  if ($bpi) {
+    class { '::nagios::server::bpi':
+      url     => $url,
+      selinux => $selinux,
+      webroot => $webroot,
     }
   }
 
