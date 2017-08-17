@@ -103,13 +103,6 @@ class nagios::client (
     target          => "/etc/nagios/conf.d/${::fqdn}-host.cfg",
   }
 
-  #### NRPE
-  nagios::service { 'check_nrpe':
-    check_command       => 'check_nrpe_status',
-    service_description => 'NRPE',
-    tag                 => hiera('nagios_server'),
-  }
-
   # Install supplementary nrpe config
   # First we template a couple of useful values
   $warnload = $::processorcount*7
