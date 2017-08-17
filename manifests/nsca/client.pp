@@ -14,7 +14,7 @@ class nagios::nsca::client (
       proto  => 'tcp',
       dport  => '5667',
       tag    => 'nsca',
-      source => $::default_ipaddress,
+      source => $::ipaddress,
       action => 'accept',
     }
     @@firewall { "200-nsca-v6-${::fqdn}":

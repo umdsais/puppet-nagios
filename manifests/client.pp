@@ -43,17 +43,6 @@ class nagios::client (
     }
   }
 
-  # NOTE
-  # We are using $::default_ipaddress in some places as it returns the IP
-  # of the interface that is the default gateway, as opposed to $::ipaddress
-  # which returns the IP of the first alphabetical interface. This causes
-  # problems on machines running Docker
-  # https://tickets.puppetlabs.com/browse/FACT-380
-  #
-  # This should be fixed in Facter 3 / Puppet 4. To remove this workaround,
-  # revert the commits within MR !664
-  # https://git.services.bristol.ac.uk/resnet/resnet-puppet/merge_requests/664
-
   if $::osfamily == 'RedHat' {
     package { ['nagios-plugins',
       'nagios-plugins-all',
@@ -102,7 +91,7 @@ class nagios::client (
   }
   @@nagios_host { $::fqdn:
     ensure          => present,
-    address         => $::default_ipaddress,
+    address         => $::ipaddress,
     use             => 'generic-host',
     action_url      => "/nagios/pnp4nagios/graph?host=${::fqdn}",
     notes           => $ilomnotes,
