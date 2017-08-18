@@ -14,8 +14,8 @@ define nagios::service (
   $command_definition,
   $use_nrpe = false,
   $install_plugin = false,
-  $plugin_provider,
-  $plugin_source,
+  $plugin_provider = undef,
+  $plugin_source = undef,
 ) {
   # Pass on various params to nagios_service
   @@nagios_service { "${title}-${host_name}":
