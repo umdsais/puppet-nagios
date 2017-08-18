@@ -11,7 +11,7 @@ define nagios::service (
   $max_check_attempts    = undef,
   $check_freshness       = undef,
   $freshness_threshold   = undef,
-  $command_definition,
+  $command_definition = $check_command,
   $use_nrpe = false,
   $install_plugin = false,
   $plugin_provider = undef,
