@@ -1,5 +1,5 @@
 # Install NSCA client
-class nagios::nsca::client (
+class nagios::client::nsca (
   $nsca_client_package,
   $firewall,
 ) {

@@ -1,5 +1,5 @@
 # Configure NSCA server
-class nagios::nsca::server (
+class nagios::server::nsca (
   $nsca_server_package,
   $nsca_service,
   $nsca_config,

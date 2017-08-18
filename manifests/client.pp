@@ -18,7 +18,7 @@ class nagios::client (
 ) inherits nagios::params {
 
   if ($nsca) {
-    class { '::nagios::nsca::client':
+    class { '::nagios::client::nsca':
       nsca_client_package =>  $nsca_client_package,
       firewall            =>  $firewall,
     }

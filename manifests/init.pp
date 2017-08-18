@@ -25,7 +25,7 @@ class nagios (
 ) inherits nagios::params {
 
   if ($nsca) {
-    class { '::nagios::nsca::server':
+    class { '::nagios::server::nsca':
       nsca_server_package => $nsca_server_package,
       nsca_service        => $nsca_service,
       nsca_config         => $nsca_config,
