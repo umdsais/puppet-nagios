@@ -13,6 +13,7 @@ define nagios::service (
   $freshness_threshold   = undef,
   $command_definition,
   $use_nrpe = false,
+  $install_plugin = false,
   $plugin_provider,
   $plugin_source,
 ) {
@@ -52,9 +53,11 @@ define nagios::service (
     }
 
     # Install plugin on client
-    nagios::plugin { $title:
-      plugin_provider => $plugin_provider,
-      plugin_source   => $plugin_source,
+    if ($install_plugin) {
+      nagios::plugin { $title:
+        plugin_provider => $plugin_provider,
+        plugin_source   => $plugin_source,
+      }
     }
 
     # Configure nrpeconfig
@@ -70,9 +73,11 @@ define nagios::service (
     }
 
     # Configure plugin on server
-    @@nagios_command { $title:
-      command_line => $command_definition,
-      tag          => hiera('nagios_server'),
+    if ($install_plugin) {
+      @@nagios_command { $title:
+        command_line => $command_definition,
+        tag          => hiera('nagios_server'),
+      }
     }
   }
 }
