@@ -364,6 +364,10 @@ class nagios (
     group   => 'nagios',
     mode    => '0644',
   }
+  Nagios::Plugin <<| tag == $::fqdn |>> {
+    require => Package['nagios'],
+    notify  => Service['nagios'],
+  }
 
   # Create files needed for RADIUS Statistics
   File <<| tag == 'radius-statistics.ini' |>>

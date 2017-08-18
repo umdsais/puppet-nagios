@@ -11,11 +11,18 @@ define nagios::service (
   $max_check_attempts    = undef,
   $check_freshness       = undef,
   $freshness_threshold   = undef,
+  $command_definition,
+  $use_nrpe = false,
+  $plugin_provider,
+  $plugin_source,
 ) {
   # Pass on various params to nagios_service
   @@nagios_service { "${title}-${host_name}":
     host_name             => $host_name,
-    check_command         => $check_command,
+    check_command         => $use_nrpe ? {
+      true    => "check_nrpe!${check_command}",
+      default => $check_command,
+    },
     service_description   => $service_description,
     use                   => $use,
     servicegroups         => $title,
@@ -34,14 +41,38 @@ define nagios::service (
     tag        => hiera('nagios_server'),
   }
 
-  # Configure a nagios_servicedependency if this is a NRPE check
-  if ($check_command =~ /^check_nrpe!/) {
+  if ($use_nrpe) {
+    # Configure a nagios_servicedependency if this is a NRPE check
     @@nagios_servicedependency { "${title}_${host_name}":
       dependent_host_name           => $host_name,
       dependent_service_description => $service_description,
       service_description           => 'NRPE',
       tag                           => hiera('nagios_server'),
       target                        => "/etc/nagios/conf.d/${host_name}-servicedependency-${title}.cfg",
+    }
+
+    # Install plugin on client
+    nagios::plugin { $title:
+      plugin_provider => $plugin_provider,
+      plugin_source   => $plugin_source,
+    }
+
+    # Configure nrpeconfig
+    nagios::nrpe::config { $title:
+      command => $command_definition,
+    }
+  } else {
+    # Install plugin on server
+    @@nagios::plugin { $title:
+      plugin_provider => $plugin_provider,
+      plugin_source   => $plugin_source,
+      tag             => hiera('nagios_server'),
+    }
+
+    # Configure plugin on server
+    @@nagios_command { $title:
+      command_line => $command_definition,
+      tag          => hiera('nagios_server'),
     }
   }
 }

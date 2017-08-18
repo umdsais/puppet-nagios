@@ -1,17 +1,8 @@
-# Installs the nagios plugin itself
-# Third-party ones may exist in a yum repo and are installed that way
-define nagios::plugin() {
-  file { $title:
-    name    => "/usr/${::lib_path}/nagios/plugins/${title}",
-    source  => "puppet:///modules/nagios/plugins/${title}",
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-    seltype => 'nagios_services_plugin_exec_t',
-    require => $::osfamily ? {
-      'RedHat' => Package['nrpe', 'nagios-plugins'],
-      'Debian' => Package['nrpe'],
-      default  => Package['nrpe'],
-    },
-  }
+# Installs the nagios plugin itself from arbitrary sources
+# e.g. package, vcsrepo, file
+define nagios::plugin (
+  $plugin_provider,
+  $plugin_source,
+) {
+  ensure_resources($plugin_provider, $plugin_source)
 }
