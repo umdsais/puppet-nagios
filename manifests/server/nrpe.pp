@@ -1,5 +1,5 @@
 # NRPE config for the Nagios server
-class nagios::nrpe::server (
+class nagios::server::nrpe (
   $firewall,
   $nrpe_plugin_package,
 ) {

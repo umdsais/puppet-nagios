@@ -25,7 +25,7 @@ class nagios::client (
   }
 
   if ($nrpe) {
-    class { '::nagios::nrpe::client':
+    class { '::nagios::client::nrpe':
       nrpe_package =>  $nrpe_package,
       nrpe_service =>  $nrpe_service,
       nrpe_config  =>  $nrpe_config,

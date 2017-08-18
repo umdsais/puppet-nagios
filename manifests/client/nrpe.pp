@@ -1,5 +1,5 @@
 # NRPE config for clients
-class nagios::nrpe::client (
+class nagios::client::nrpe (
   $nrpe_package,
   $nrpe_service,
   $nrpe_config,

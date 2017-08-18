@@ -34,7 +34,7 @@ class nagios (
   }
 
   if ($nrpe) {
-    class { '::nagios::nrpe::server':
+    class { '::nagios::server::nrpe':
       firewall            => $firewall,
       nrpe_plugin_package => $nrpe_plugin_package,
     }
