@@ -10,6 +10,12 @@ class nagios::server::nrpe (
     name   => $nrpe_plugin_package,
   }
 
+  # Define Nagios command to run NRPE checks
+  nagios_command { 'check_nrpe':
+    command_line => '$USER1$/check_nrpe -u -H $HOSTADDRESS$ -t 20 -c $ARG1$',
+    tag          => hiera('nagios_server'),
+  }
+
   if ($firewall) {
     # Auto-add a firewall rule in the NRPE clients just for us
     @@firewall { "100-nrpe-${::fqdn}":
