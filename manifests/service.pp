@@ -55,7 +55,7 @@ define nagios::service (
 
     # Install plugin on client
     if ($install_plugin) {
-      nagios::plugin { $title:
+      nagios::plugin { "${title}-${host_name}":
         plugin_provider => $plugin_provider,
         plugin_source   => $plugin_source,
       }
