@@ -68,7 +68,7 @@ define nagios::service (
     }
   } else {
     # Install plugin on server
-    @@nagios::plugin { $title:
+    @@nagios::plugin { "${title}-${host_name}":
       plugin_provider => $plugin_provider,
       plugin_source   => $plugin_source,
       tag             => hiera('nagios_server'),
