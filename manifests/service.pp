@@ -13,6 +13,7 @@ define nagios::service (
   $freshness_threshold   = undef,
   $command_definition = $check_command,
   $use_nrpe = false,
+  $use_sudo = false,
   $install_plugin = false,
   $plugin_provider = undef,
   $plugin_source = undef,
@@ -63,6 +64,7 @@ define nagios::service (
     # Configure nrpeconfig
     nagios::nrpe::config { $title:
       command => $command_definition,
+      sudo    => $use_sudo,
     }
   } else {
     # Install plugin on server
