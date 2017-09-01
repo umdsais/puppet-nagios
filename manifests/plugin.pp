@@ -4,5 +4,9 @@ define nagios::plugin (
   $plugin_provider,
   $plugin_source,
 ) {
-  ensure_resources($plugin_provider, $plugin_source)
+  if ($plugin_provider == 'package') {
+    ensure_package($plugin_source)
+  } else {
+    ensure_resources($plugin_provider, $plugin_source)
+  }
 }
