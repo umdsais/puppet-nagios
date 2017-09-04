@@ -34,6 +34,7 @@ define nagios::service (
     check_freshness       => $check_freshness,
     freshness_threshold   => $freshness_threshold,
     target                => "/etc/nagios/conf.d/${host_name}-service-${title}.cfg",
+    service_dependency    => undef,
   }
 
   # Also configure a nagios_servicegroup for this service
@@ -43,14 +44,25 @@ define nagios::service (
     tag        => hiera('nagios_server'),
   }
 
+  if ($servicedependency) {
+    # Configure a nagios_servicedependency on arbitrary other services on this host
+    @@nagios_servicedependency { "${title}_${host_name}_${service_dependency}":
+      dependent_host_name           => $host_name,
+      dependent_service_description => $service_description,
+      service_description           => $service_dependency,
+      tag                           => hiera('nagios_server'),
+      target                        => "/etc/nagios/conf.d/${host_name}-servicedependency-${title}-${service_dependency}.cfg",
+    }
+  }
+
   if ($use_nrpe) {
-    # Configure a nagios_servicedependency if this is a NRPE check
-    @@nagios_servicedependency { "${title}_${host_name}":
+    # Configure a nagios_servicedependency on NRPE if this is a NRPE check
+    @@nagios_servicedependency { "${title}_${host_name}_NRPE":
       dependent_host_name           => $host_name,
       dependent_service_description => $service_description,
       service_description           => 'NRPE',
       tag                           => hiera('nagios_server'),
-      target                        => "/etc/nagios/conf.d/${host_name}-servicedependency-${title}.cfg",
+      target                        => "/etc/nagios/conf.d/${host_name}-servicedependency-${title}-NRPE.cfg",
     }
 
     # Install plugin on client
