@@ -35,7 +35,6 @@ define nagios::service (
     check_freshness       => $check_freshness,
     freshness_threshold   => $freshness_threshold,
     target                => "/etc/nagios/conf.d/${host_name}-service-${title}.cfg",
-    service_dependency    => undef,
   }
 
   # Also configure a nagios_servicegroup for this service
