@@ -14,7 +14,7 @@ define nagios::service (
   $command_definition = $check_command,
   $use_nrpe = false,
   $use_sudo = false,
-  $install_plugin = false,
+  $install_plugin = true,
   $plugin_provider = undef,
   $plugin_source = undef,
 ) {
@@ -67,15 +67,15 @@ define nagios::service (
       sudo    => $use_sudo,
     }
   } else {
-    # Install plugin on server
-    @@nagios::plugin { "${title}-${host_name}":
-      plugin_provider => $plugin_provider,
-      plugin_source   => $plugin_source,
-      tag             => hiera('nagios_server'),
-    }
-
-    # Configure plugin on server
     if ($install_plugin) {
+      # Install plugin on server
+      @@nagios::plugin { "${title}-${host_name}":
+        plugin_provider => $plugin_provider,
+        plugin_source   => $plugin_source,
+        tag             => hiera('nagios_server'),
+      }
+
+      # Configure plugin on server
       @@nagios::command { "${$title}-${host_name}":
         command_name => $title,
         command_line => $command_definition,
