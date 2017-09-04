@@ -76,7 +76,8 @@ define nagios::service (
 
     # Configure plugin on server
     if ($install_plugin) {
-      @@nagios_command { $title:
+      @@nagios::command { "${$title}-${host_name}":
+        command_name => $title,
         command_line => $command_definition,
         tag          => hiera('nagios_server'),
       }

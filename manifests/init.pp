@@ -357,12 +357,9 @@ class nagios (
     require => Package['nagios'],
     notify  => Service['nagios'],
   }
-  Nagios_command <<| tag == $::fqdn |>> {
+  Nagios::Command <<| tag == $::fqdn |>> {
     require => Package['nagios'],
     notify  => Service['nagios'],
-    owner   => 'root',
-    group   => 'nagios',
-    mode    => '0644',
   }
   Nagios::Plugin <<| tag == $::fqdn |>> {
     require => Package['nagios'],
