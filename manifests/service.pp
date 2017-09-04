@@ -17,6 +17,7 @@ define nagios::service (
   $install_plugin = true,
   $plugin_provider = undef,
   $plugin_source = undef,
+  $service_dependency = undef,
 ) {
   # Pass on various params to nagios_service
   @@nagios_service { "${title}-${host_name}":
@@ -44,7 +45,7 @@ define nagios::service (
     tag        => hiera('nagios_server'),
   }
 
-  if ($servicedependency) {
+  if ($service_dependency) {
     # Configure a nagios_servicedependency on arbitrary other services on this host
     @@nagios_servicedependency { "${title}_${host_name}_${service_dependency}":
       dependent_host_name           => $host_name,
