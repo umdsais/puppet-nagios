@@ -5,7 +5,7 @@ define nagios::command (
   $command_line,
 ) {
   ensure_resource('nagios_command', $command_name, {
-    'command_line' => $command_definition,
+    'command_line' => $command_line,
     'ensure'       => 'present',
     'owner'        => 'root',
     'group'        => 'nagios',
