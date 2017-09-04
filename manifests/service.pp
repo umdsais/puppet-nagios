@@ -89,7 +89,7 @@ define nagios::service (
       }
 
       # Configure plugin on server
-      @@nagios::command { "${$title}-${host_name}":
+      @@nagios::command { "${title}-${host_name}":
         command_name => $title,
         command_line => $command_definition,
         tag          => hiera('nagios_server'),
