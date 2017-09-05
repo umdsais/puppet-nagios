@@ -25,7 +25,7 @@ define nagios::service (
     host_name             => $host_name,
     check_command         => $use_nrpe ? {
       true    => "check_nrpe!${check_command}",
-      default => "\$USER1\$/${check_command}",
+      default => $check_command,
     },
     service_description   => $service_description,
     use                   => $use,
@@ -92,7 +92,7 @@ define nagios::service (
       # Configure plugin on server
       @@nagios::command { "${title}-${host_name}":
         command_name => $title,
-        command_line => $command_definition,
+        command_line => "\$USER1\$/${command_definition}",
         tag          => hiera('nagios_server'),
       }
     }
