@@ -14,6 +14,7 @@ define nagios::service (
   $command_definition = $check_command,
   $use_nrpe = false,
   $use_sudo = false,
+  $sudo_user = undef,
   $install_plugin = true,
   $plugin_provider = undef,
   $plugin_source = undef,
@@ -75,8 +76,9 @@ define nagios::service (
 
     # Configure nrpeconfig
     nagios::nrpe::config { $title:
-      command => $command_definition,
-      sudo    => $use_sudo,
+      command   => $command_definition,
+      sudo      => $use_sudo,
+      sudo_user => $sudo_user,
     }
   } else {
     if ($install_plugin) {
