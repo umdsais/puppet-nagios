@@ -25,7 +25,7 @@ define nagios::service (
     host_name             => $host_name,
     check_command         => $use_nrpe ? {
       true    => "check_nrpe!${check_command}",
-      default => $check_command,
+      default => "\$USER1\$/${check_command}",
     },
     service_description   => $service_description,
     use                   => $use,
