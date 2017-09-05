@@ -7,9 +7,17 @@ class nagios::client::nrpe (
   $selinux,
 ) {
 
-  # Find our Nagios server(s)
-  $nagios_server = hiera_array('nagios_server')
-  $nagios_server_list = join($nagios_server, ',')
+  # Find our array of Nagios server(s) from Hiera
+  $nagios_servers = hiera_array('nagios_server')
+
+  # Map each hostname from the array to one or more IPs
+  $nagios_server_ips = $nagios_servers.map |String $nagios_server| {
+    dns_a($nagios_server)
+  }
+
+  # Squash the arrays of hostnames and IPs into strings that can be read by NRPE
+  $nagios_server_list = join($nagios_servers, ',')
+  $nagios_server_ip_list = join($nagios_server_ips, ',')
 
   package { 'nrpe':
     ensure  => installed,
