@@ -2,7 +2,7 @@
 # and if necessary, a servicedependency
 define nagios::service (
   $host_name = $::fqdn,
-  $check_command,
+  $check_command = $title,
   $service_description,
   $use = undef,
   $add_servicegroup = true,
