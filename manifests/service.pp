@@ -19,6 +19,7 @@ define nagios::service (
   $plugin_provider = 'package',
   $plugin_source = undef,
   $service_dependency = undef,
+  $nagios_server = hiera('nagios_server'),
 ) {
   # Pass on various params to nagios_service
   @@nagios_service { "${title}-${host_name}":
@@ -30,7 +31,7 @@ define nagios::service (
     service_description   => $service_description,
     use                   => $use,
     servicegroups         => $title,
-    tag                   => hiera('nagios_server'),
+    tag                   => $nagios_server
     active_checks_enabled => $active_checks_enabled,
     max_check_attempts    => $max_check_attempts,
     check_freshness       => $check_freshness,
@@ -42,7 +43,7 @@ define nagios::service (
   @@nagios::servicegroup { "${title}-${host_name}":
     groupname  => $title,
     groupalias => $service_description,
-    tag        => hiera('nagios_server'),
+    tag        => $nagios_server,
   }
 
   if ($service_dependency) {
@@ -51,7 +52,7 @@ define nagios::service (
       dependent_host_name           => $host_name,
       dependent_service_description => $service_description,
       service_description           => $service_dependency,
-      tag                           => hiera('nagios_server'),
+      tag                           => $nagios_server,
       target                        => "/etc/nagios/conf.d/${host_name}-servicedependency-${title}-${service_dependency}.cfg",
     }
   }
@@ -62,7 +63,7 @@ define nagios::service (
       dependent_host_name           => $host_name,
       dependent_service_description => $service_description,
       service_description           => 'NRPE',
-      tag                           => hiera('nagios_server'),
+      tag                           => $nagios_server,
       target                        => "/etc/nagios/conf.d/${host_name}-servicedependency-${title}-NRPE.cfg",
     }
 
@@ -86,14 +87,14 @@ define nagios::service (
       @@nagios::plugin { "${title}-${host_name}":
         plugin_provider => $plugin_provider,
         plugin_source   => $plugin_source,
-        tag             => hiera('nagios_server'),
+        tag             => $nagios_server,
       }
 
       # Configure plugin on server
       @@nagios::command { "${title}-${host_name}":
         command_name => $title,
         command_line => "\$USER1\$/${command_definition}",
-        tag          => hiera('nagios_server'),
+        tag          => $nagios_server,
       }
     }
   }
