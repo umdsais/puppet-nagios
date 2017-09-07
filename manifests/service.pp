@@ -12,6 +12,7 @@ define nagios::service (
   $check_freshness       = undef,
   $freshness_threshold   = undef,
   $command_definition = $check_command,
+  $check_interval = undef,
   $use_nrpe = false,
   $use_sudo = false,
   $sudo_user = undef,
@@ -35,6 +36,7 @@ define nagios::service (
     active_checks_enabled => $active_checks_enabled,
     max_check_attempts    => $max_check_attempts,
     check_freshness       => $check_freshness,
+    normal_check_interval => $check_interval,
     freshness_threshold   => $freshness_threshold,
     target                => "/etc/nagios/conf.d/${host_name}-service-${title}.cfg",
   }
