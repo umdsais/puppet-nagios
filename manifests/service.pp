@@ -16,7 +16,7 @@ define nagios::service (
   $use_sudo = false,
   $sudo_user = undef,
   $install_plugin = true,
-  $plugin_provider = undef,
+  $plugin_provider = 'package',
   $plugin_source = undef,
   $service_dependency = undef,
 ) {
