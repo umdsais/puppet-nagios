@@ -31,7 +31,7 @@ define nagios::service (
     service_description   => $service_description,
     use                   => $use,
     servicegroups         => $title,
-    tag                   => $nagios_server
+    tag                   => $nagios_server,
     active_checks_enabled => $active_checks_enabled,
     max_check_attempts    => $max_check_attempts,
     check_freshness       => $check_freshness,
