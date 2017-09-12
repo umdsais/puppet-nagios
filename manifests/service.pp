@@ -5,6 +5,7 @@ define nagios::service (
   $check_command = $title,
   $service_description,
   $use = undef,
+  $servicegroups = $title,
   $add_servicegroup = true,
   $add_servicedep = true,
   $active_checks_enabled = undef,
@@ -31,7 +32,7 @@ define nagios::service (
     },
     service_description   => $service_description,
     use                   => $use,
-    servicegroups         => $title,
+    servicegroups         => $servicegroups,
     tag                   => $nagios_server,
     active_checks_enabled => $active_checks_enabled,
     max_check_attempts    => $max_check_attempts,
@@ -41,11 +42,13 @@ define nagios::service (
     target                => "/etc/nagios/conf.d/${host_name}-service-${title}.cfg",
   }
 
-  # Also configure a nagios_servicegroup for this service
-  @@nagios::servicegroup { "${title}-${host_name}":
-    groupname  => $title,
-    groupalias => $service_description,
-    tag        => $nagios_server,
+  if ($add_servicegroup) {
+    # Also configure a nagios_servicegroup for this service
+    @@nagios::servicegroup { "${title}-${host_name}":
+      groupname  => $title,
+      groupalias => $service_description,
+      tag        => $nagios_server,
+    }
   }
 
   if ($service_dependency) {
