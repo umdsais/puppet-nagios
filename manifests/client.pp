@@ -98,7 +98,9 @@ class nagios::client (
 
   # Optionally install some basic checks
   if ($basic_checks) {
-    include ::nagios::client::checks
+    class { '::nagios::client::checks':
+      nrpe => $nrpe,
+    }
   }
 
   # Install supplementary nrpe config
