@@ -4,6 +4,7 @@ class nagios::client (
   $nsca                = true,
   $selinux             = true,
   $firewall            = true,
+  $basic_checks        = true,
   $nrpe_package        = $nagios::params::nrpe_package,
   $webroot             = $nagios::params::webroot,
   $cgiroot             = $nagios::params::cgiroot,
@@ -93,6 +94,11 @@ class nagios::client (
     statusmap_image => "${::operatingsystem}.gd2",
     tag             => hiera('nagios_server'),
     target          => "/etc/nagios/conf.d/${::fqdn}-host.cfg",
+  }
+
+  # Optionally install some basic checks
+  if ($basic_checks) {
+    include ::nagios::client::checks
   }
 
   # Install supplementary nrpe config
