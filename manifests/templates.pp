@@ -53,6 +53,10 @@ class nagios::templates {
     command_line => '/usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type: $NOTIFICATIONTYPE$\n\nService: $SERVICEDESC$\nHost: $HOSTALIAS$\nAddress: $HOSTADDRESS$\nState: $SERVICESTATE$\n\nDate/Time: $LONGDATETIME$\n\nAdditional Info:\n\n$SERVICEOUTPUT$" | /bin/mail -s "** $NOTIFICATIONTYPE$ Service Alert: $HOSTALIAS$/$SERVICEDESC$ is $SERVICESTATE$ **" $CONTACTEMAIL$',
   }
 
+  nagios_command { 'check_dummy':
+    command_line => '$USER1$/check_dummy $ARG1$',
+  }
+
   # Service templates
   nagios_service{ 'generic-service':
     active_checks_enabled        => '1',
