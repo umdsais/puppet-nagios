@@ -40,6 +40,11 @@ class nagios::templates {
     statusmap_image => 'aggregate.gd2',
   }
 
+  # Command required for the above
+  nagios_command { 'check-host-alive':
+    command_line => '$USER1$/check_ping -H $HOSTADDRESS$ -w 1000.0,20% -c 3000.0,90% -p 1',
+  }
+
   # Service templates
   nagios_service{ 'generic-service':
     active_checks_enabled        => '1',
