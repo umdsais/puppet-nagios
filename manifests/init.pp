@@ -77,6 +77,20 @@ class nagios (
     ensure  => installed,
   }
 
+  # Create command definitions required for PNP4Nagios
+  nagios_command { 'process-service-perfdata':
+    command_line => '/usr/bin/perl /usr/libexec/pnp4nagios/process_perfdata.pl',
+  }
+  nagios_command { 'process-host-perfdata':
+    command_line => '/usr/bin/perl /usr/libexec/pnp4nagios/process_perfdata.pl -d HOSTPERFDATA',
+  }
+  nagios_command { 'process-service-perfdata-file':
+    command_line => '/usr/libexec/pnp4nagios/process_perfdata.pl --bulk=/var/log/nagios/service-perfdata',
+  }
+  nagios_command { 'process-host-perfdata-file':
+    command_line => '/usr/libexec/pnp4nagios/process_perfdata.pl --bulk=/var/log/nagios/host-perfdata',
+  }
+
   # Create firewall exception
   if ($firewall) {
     firewall { '100-nagios':
