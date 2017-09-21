@@ -96,8 +96,8 @@ define nagios::service (
       }
 
       # Configure plugin on server
-      @@nagios::command { "${title}-${host_name}":
-        command_name => $title,
+      @@nagios::command { "${check_command}-${host_name}":
+        command_name => $check_command,
         command_line => "\$USER1\$/${command_definition}",
         tag          => $nagios_server,
       }
