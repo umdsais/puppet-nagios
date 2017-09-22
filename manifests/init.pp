@@ -215,17 +215,13 @@ class nagios (
   }
 
   # Start the Nagios service, and make it restart if there have been changes to the config
-  # We use the reload command rather than restart, since it is much faster
   service { 'nagios':
-    ensure  => running,
-    name    => $nagios_service,
-    enable  => true,
-    restart => $::operatingsystemmajrelease ? {
-      '6'     => '/sbin/service nagios reload',
-      '7'     => '/bin/systemctl restart nagios.service',
-      default => '/sbin/service nagios restart',
-    },
-    require => [ Package['nagios'], File['nagios.cfg'] ],
+    ensure      => running,
+    name        => $nagios_service,
+    enable      => true,
+    has_status  => true,
+    has_restart => true,
+    require     => [ Package['nagios'], File['nagios.cfg'] ],
   }
 
   # Also reload the config hourly to handle items that have been deleted from
@@ -236,10 +232,7 @@ class nagios (
     mode    => '0755',
     owner   => 'root',
     group   => 'root',
-    content => $::operatingsystemmajrelease ? {
-      '6'     => '/sbin/service nagios reload >/dev/null',
-      '7'     => '/bin/systemctl restart nagios.service >/dev/null',
-      default => '/sbin/service nagios restart >/dev/null',
+    content => '/bin/systemctl restart nagios.service >/dev/null',
     },
   }
 
