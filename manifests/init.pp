@@ -216,12 +216,12 @@ class nagios (
 
   # Start the Nagios service, and make it restart if there have been changes to the config
   service { 'nagios':
-    ensure      => running,
-    name        => $nagios_service,
-    enable      => true,
-    has_status  => true,
-    has_restart => true,
-    require     => [ Package['nagios'], File['nagios.cfg'] ],
+    ensure     => running,
+    name       => $nagios_service,
+    enable     => true,
+    hasstatus  => true,
+    hasrestart => true,
+    require    => [ Package['nagios'], File['nagios.cfg'] ],
   }
 
   # Also reload the config hourly to handle items that have been deleted from
