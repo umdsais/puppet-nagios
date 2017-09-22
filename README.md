@@ -10,7 +10,7 @@
        * [nagios::client](#nagiosclient)
     * [Resources](#resources)
        * [nagios::service](#nagiosservice)
-4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
+4. [Examples](#examples)
 5. [Limitations - OS compatibility, etc.](#limitations)
 6. [Development - Guide for contributing to the module](#development)
 
@@ -151,21 +151,216 @@ Name of the Nagios service. If you need to add support for a new distro, please 
 
 The `::nagios::client` class installs components needed for a system to be monitored by a Nagios monitoring server.
 
+##### `nrpe`
+Whether to enable support for NRPE. Default: `true`
+
+##### `nsca`
+Whether to enable support for NSCA. Default: `true`
+
+##### `selinux`
+Whether to manage SELinux policies to allow plugins to execute properly via NRPE. Default: `true`
+
+##### `firewall`
+Whether to manage firewall rules to allow plugin to execute properly via NRPE. Default: `true`
+
+##### `basic_checks`
+Whether to set up a basic set of checks that should work on all systems (e.g. ping). Default: `true`
+
+##### `nrpe_package`
+Name of the NRPE client package. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
+
+##### `nsca_client_package`
+Name of the NSCA client package. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
+
+##### `nrpe_service`
+Name of the NRPE service. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
+
+##### `nrpe_config`
+Path to the NRPE config file. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
+
+##### `nrpe_d`
+Path to the NRPE conf.d directory. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
+
+##### `nrpe_plugin_package`
+Name of the NRPE plugin package. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
+
+
 ### Defined types
 
 #### `nagios::service`
 
-## Reference
+The `::nagios::service` defined type installs a service, a command and other related components required to monitor something.
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+##### `host_name`
+Hostname of the system that the check should be associated with. Default: `$::fqdn`
+
+##### `check_command`
+Override the name of the check command in the service definition. Default: `$title`
+
+##### `service_description`
+Human-readable name for the service.
+
+##### `use`
+Name of the Nagios template to inherit from. Default: `undef`
+
+##### `servicegroups`
+One or more servicegroups that this service should be a member of. Default: `$title`
+
+##### `add_servicegroup`
+Whether to automatically create the servicegroup that this service belongs to by default. Default: `true`
+
+##### `add_servicedep`
+Whether to automatically add a service dependency on NRPE, if this service is a NRPE-based check. Default: `true`
+
+##### `active_checks_enabled`
+Whether to override active checks. Default: `undef`
+
+##### `max_check_attempts`
+Whether to override the maximum number of check attempts before reporting hard state. Default: `undef`
+
+##### `check_freshness`
+Override check freshness. Probably only useful for passive checks. Default: `undef`
+
+##### `freshness_threshold`
+Override freshness threshold. Probably only useful for passive checks. Default: `undef`
+
+##### `command_definition`
+The command line used to execute the plugin. The default can be used only if no arguments are required. Default: `$check_command`
+
+##### `check_interval`
+Override the check interval on a per-service basis. This is usually inherited from a template with `use`. Default: `undef`
+
+##### `use_nrpe`
+Whether to execute this check on the monitored host via NRPE. Default: `false`
+
+##### `use_sudo`
+Whether to use sudo when executing this check. Default: `false`
+
+##### `sudo_user`
+The username to use when executing plugins with sudo when `$use_sudo = true`. Default `undef`
+
+##### `install_plugin`
+Whether to install the Nagios plugin on the system. Default: `true`
+
+##### `plugin_provider`
+Provider for the plugin installation, if `$install_plugin = true`. Default: `package`
+
+##### `plugin_source`
+Source for installation of the plugin if `$install_plugin = true`. Default: `undef`
+
+##### `service_dependency`
+Add arbitrary service dependencies on other services on this host. Default: `undef`
+
+##### `nagios_server`
+The hostname of the Nagios server that will be monitoring this host. Default: `hiera('nagios_server')`
+
+## Examples
+
+### Install a Nagios server
+
+```puppet
+class ::profile::nagios {
+  # Install Nagios server
+  class { 'nagios':
+    nrpe        => true,                     # Set up NRPE for monitoring of remote hosts
+    nsca        => false,                    # Skip NSCA, which is needed for passive checks
+    selinux     => true,                     # Manage SELinux policies to allow Nagios to run smoothly
+    firewall    => true,                     # Manage firewall rules to allow Nagios/NRPE to run smoothly
+    url         => 'nagios.example.com',     # Service URL of Nagios, if different from the system hostname
+    serveradmin => 'root@example.com',       # Admin's email address
+    ssl_cert    => '/etc/pki/tls/certs/nagios.example.com.pem',  # Path to SSL cert for HTTPS
+    ssl_key     => '/etc/pki/tls/private/nagios.example.com.key',  # Path to SSL key for HTTPS
+    auth_type   => 'CAS',                    # Override Apache basic auth and use CAS single sign-on instead
+  }
+
+  # Deploy HTTPS certificate
+  file { '/etc/pki/tls/certs/nagios.example.com.pem':
+    source => 'puppet:///modules/profile/nagios/nagios.example.com.pem',
+    mode   => '0644',
+    owner  => 'root',
+    group  => 'root',
+  }
+
+  # Deploy HTTPS private key
+  file { '/etc/pki/tls/private/nagios.example.com.key':
+    source => 'puppet:///modules/profile/nagios/nagios.example.com.key',
+    mode   => '0600',
+    owner  => 'root',
+    group  => 'root',
+  }
+}
+```
+
+### Basic non-NRPE service
+
+This service definition monitors the host remotely, directly from the Nagios server. This is
+ideal for monitoring services that are available on the remote host, such as HTTP.
+
+```puppet
+nagios::service { 'check_http':
+  service_description => 'HTTP',
+  plugin_source       => 'nagios-plugins-http',
+  command_definition  => 'check_http -I $HOSTADDRESS$ $ARG1$',
+}
+```
+
+### Basic NRPE service
+
+This service definition installs the plugin on the monitored host and configures NRPE. The check
+itself is installed on the Nagios server. This is ideal for monitoring attributes of the remote
+host that are not available externally.
+
+```puppet
+nagios::service { 'check_users':
+  use_nrpe            => true,                       # Execute this on the host via NRPE
+  service_description => 'Current users',            # Human-readable description
+  plugin_source       => 'nagios-plugins-users',     # Package that provides this plugin
+  command_definition  => 'check_users -w 10 -c 20',  # Syntax for actually calling the plugin
+}
+```
+
+### Service running on an unmanaged host
+
+This service definition is applied to the Nagios server, and the host name is overridden
+to point at a different system (one that is not managed by Puppet). This is ideal for
+monitoring "dumb" devices such as switches or other people's servers that you have no
+access to.
+
+```puppet
+nagios::service { 'check_ping_router':
+  host_name           => 'router.example.com',
+  plugin_source       => 'nagios-plugins-ping',
+  service_description => 'Ping',
+  command_definition  => 'check_ping -H $HOSTADDRESS$ -w 100,10% -c 1000,50% -p 5',
+}
+```
+
+### Service running on a manually managed host
+
+This service definition is applied to the Nagios server and the host name is overriden
+to point at a different system which is manually managed, and has a manually-configured
+NRPE agent but no Puppet agent. This is ideal for monitoring legacy servers where you
+can't retrofit Puppet.
+
+```
+nagios::service { 'check_load_legacysystem.example.com':
+  check_command       => 'check_load',                 # Name of the command we have manually set on the remote system
+  use_nrpe            => true,                         # Use NRPE, which we have manually set up
+  service_description => 'Load',
+  host_name           => 'legacysystem.example.com',   # Override monitored server name
+  install_plugin      => false,                        # Don't attempt to manage the plugin
+}
+```
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+This module has been developed for Nagios 4 on CentOS 7. It's pretty flexible so it should work on other platforms too but they have had little-to-no testing.
+
+This module is currently functional but not feature-complete. There are rough edges and things not implemented yet. Please look at the
+[issue tracker](https://github.com/djjudas21/puppet-nagios/issues) to look for outstanding issues and feature requests.
+
+In particular the HTTPS/SSL config is rough around the edges and quite a few options are hard-coded in and need to be brought out to parameters.
 
 ## Development
 
-This module was written primarily for internal use - features we haven't needed to use probably haven't been written. Please send pull requests with new features and bug fixes. You are also welcome to file issues but I make no guarantees of development effort if the features aren't useful to my employer.
+This module was written primarily for internal use - features we haven't needed to use probably haven't been written. Please send pull requests with new features and bug fixes. You are also welcome to file [issues](https://github.com/djjudas21/puppet-nagios/issues) but I make no guarantees of development effort if the features aren't useful to my employer.
