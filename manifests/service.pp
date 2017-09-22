@@ -1,9 +1,9 @@
 # Wrapper for nagios_service to create a service, a servicegroup
 # and if necessary, a servicedependency
 define nagios::service (
+  $service_description,
   $host_name = $::fqdn,
   $check_command = $title,
-  $service_description,
   $use = undef,
   $servicegroups = $title,
   $add_servicegroup = true,
