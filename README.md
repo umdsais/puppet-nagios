@@ -342,7 +342,7 @@ to point at a different system which is manually managed, and has a manually-con
 NRPE agent but no Puppet agent. This is ideal for monitoring legacy servers where you
 can't retrofit Puppet.
 
-```
+```puppet
 nagios::service { 'check_load_legacysystem.example.com':
   check_command       => 'check_load',                 # Name of the command we have manually set on the remote system
   use_nrpe            => true,                         # Use NRPE, which we have manually set up
