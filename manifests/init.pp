@@ -6,7 +6,6 @@ class nagios (
   $selinux             = true,
   $firewall            = true,
   $url                 = $::fqdn,
-  $nrpe_package        = $nagios::params::nrpe_package,
   $webroot             = $nagios::params::webroot,
   $cgiroot             = $nagios::params::cgiroot,
   $dev                 = false,
