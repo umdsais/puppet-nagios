@@ -233,7 +233,6 @@ class nagios (
     owner   => 'root',
     group   => 'root',
     content => '/bin/systemctl restart nagios.service >/dev/null',
-    },
   }
 
   # Install SELinux Nagios policy
