@@ -45,7 +45,7 @@ define nagios::service (
   if ($add_servicegroup) {
     # Also configure a nagios_servicegroup for this service
     @@nagios::servicegroup { "${title}-${host_name}":
-      groupname  => $check_command,
+      groupname  => $title,
       groupalias => $service_description,
       tag        => $nagios_server,
     }
