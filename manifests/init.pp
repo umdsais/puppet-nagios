@@ -6,6 +6,7 @@ class nagios (
   $selinux             = true,
   $firewall            = true,
   $url                 = $::fqdn,
+  $aliases             = [],
   $webroot             = $nagios::params::webroot,
   $cgiroot             = $nagios::params::cgiroot,
   $dev                 = false,
@@ -111,6 +112,7 @@ class nagios (
   # Main SSL vhost for nagios and pnp4nagios
   ::apache::vhost { "${url}-https":
     servername           => $url,
+    serveraliases        => $aliases,
     port                 => 443,
     docroot              => $cgiroot,
     notify               => Service['httpd'],

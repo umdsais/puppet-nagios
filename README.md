@@ -102,6 +102,9 @@ Manage firewall rules on Nagios clients and server. Strongly recommended to allo
 ##### `url`
 Override the hostname that your Nagios server will run on, if you don't want it to run on the server's `$::fqdn`. Default: `$::fqdn`
 
+##### `aliases`
+Array of alternative hostnames that your Nagios server should respond to. Don't forget to set these as alternate names in your SSL certificate. Default: `[]`
+
 ##### `dev`
 Set a flag to mark this Nagios server as a development/testing server. This suppresses active notifications from Nagios. Default: `false`
 
