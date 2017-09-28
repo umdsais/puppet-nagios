@@ -32,9 +32,17 @@ define nagios::nrpe::config(
 
     # Split command from its args
     $array = split($command, ' ')
+    $shortcmd = $array[0]
 
+    # Create sudo rule
+    sudo::conf { $title:
+      priority => 10,
+      content  => "nrpe ALL=(ALL) NOPASSWD: /usr/${::lib_path}/nagios/plugins/${shortcmd}",
+    }
+
+    # Omit this sudo rule from the logwatch to avoid clutter
     logwatch::ignore { $title:
-      regex => "/usr/${::lib_path}/nagios/plugins/${array[0]}",
+      regex => "/usr/${::lib_path}/nagios/plugins/${shortcmd}",
     }
   }
 }
