@@ -1,10 +1,10 @@
 # Create Nagios users
 define nagios::user (
-  $alias=undef,
-  $email=undef,
-  $use = 'generic-contact',
-  $ensure=present,
-  $contactgroups = undef,
+  String $alias=undef,
+  String $email=undef,
+  String $use = 'generic-contact',
+  String $ensure=present,
+  String $contactgroups = undef,
 ) {
   # create nagios user
   nagios_contact { $name:
