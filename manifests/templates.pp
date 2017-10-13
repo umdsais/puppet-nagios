@@ -75,7 +75,7 @@ class nagios::templates {
     max_check_attempts           => '3',
     normal_check_interval        => '2',
     retry_check_interval         => '1',
-    notification_options         => 'w,c,r',
+    notification_options         => 'w,c,u,r',
     notification_interval        => '0',
     notification_period          => '24x7',
     register                     => '0',
