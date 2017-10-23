@@ -21,6 +21,7 @@ class nagios (
   String $ssl_key             = '/path/to/key.key',
   String $ssl_chain           = undef,
   String $auth_type           = 'basic',
+  Integer $use_syslog         = 1,
 ) inherits nagios::params {
 
   if ($nsca) {
