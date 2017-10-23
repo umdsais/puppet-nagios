@@ -1,7 +1,7 @@
 # Some standard checks that should be safe on every host
 # Plugins must be provided on every supported OS for these!
 class nagios::client::checks (
-  $nrpe = false,
+  Boolean $nrpe = false,
 ) {
   # Ping
   nagios::service { 'check_ping':

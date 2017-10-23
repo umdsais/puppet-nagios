@@ -20,16 +20,16 @@
 # priority - (1-3) this sets the display priority on screen, 1 being 'high priority'
 
 define nagios::bpi::config (
-  $displayname,
-  $members,
-  $nagios = true,
-  $desc = undef,
-  $primary = 1,
-  $info = undef,
-  $warning_threshold = 0,
-  $critical_threshold = 0,
-  $priority = 1,
-  $event_handler = undef,
+  String $displayname,
+  String $members,
+  Boolean $nagios = true,
+  String $desc = undef,
+  Integer $primary = 1,
+  String $info = undef,
+  Integer $warning_threshold = 0,
+  Integer $critical_threshold = 0,
+  Integer $priority = 1,
+  String $event_handler = undef,
 ) {
   concat::fragment{ "bpi-${title}":
     target  => 'bpi.conf',

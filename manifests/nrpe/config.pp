@@ -2,11 +2,11 @@
 # Some stock plugins lack a NRPE snippet so will need nrpeconfig{}
 # without nagiosplugin{}
 define nagios::nrpe::config(
-  $command,
-  $sudo = undef,
-  $sudo_user = 'root',
-  $ensure = present,
-  $nrpe_d = $::nagios::params::nrpe_d,
+  String $command,
+  String $sudo = undef,
+  String $sudo_user = 'root',
+  String $ensure = present,
+  String $nrpe_d = $::nagios::params::nrpe_d,
 ) {
 
   if ! ($ensure in [ 'present', 'absent' ]) {
