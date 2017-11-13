@@ -187,6 +187,18 @@ Path to the NRPE conf.d directory. If you need to add support for a new distro, 
 ##### `nrpe_plugin_package`
 Name of the NRPE plugin package. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 
+##### `ssl_cert`
+Path to SSL server certificate. Default: `/path/to/cert.crt`
+
+##### `ssl_key`
+Path to SSL private key. Default: `/path/to/key.key`
+
+##### `ssl_chain`
+Path to SSL certificate chain file. Default: `undef`
+
+##### `ssl_cipher`
+Allowed SSL ciphers. Defaults to a more secure list than ships with [`puppetlabs/apache`](https://forge.puppet.com/puppetlabs/apache#ssl_cipher). Default: `HIGH:!MEDIUM:!aNULL:!MD5:!RC4:!3DES`
+
 
 ### Defined types
 

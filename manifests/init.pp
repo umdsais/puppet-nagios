@@ -20,6 +20,7 @@ class nagios (
   String $ssl_cert            = '/path/to/cert.crt',
   String $ssl_key             = '/path/to/key.key',
   String $ssl_chain           = undef,
+  String $ssl_cipher          = 'HIGH:!MEDIUM:!aNULL:!MD5:!RC4:!3DES',
   String $auth_type           = 'basic',
   Integer $use_syslog         = 1,
 ) inherits nagios::params {
@@ -48,6 +49,7 @@ class nagios (
     }
   }
 
+  include ::apache::mod::ssl
   include ::apache::mod::cgi
   include ::apache::mod::php
   include ::apache::mod::rewrite
@@ -120,6 +122,7 @@ class nagios (
     ssl_cert             => $ssl_cert,
     ssl_key              => $ssl_key,
     ssl_chain            => $ssl_chain,
+    ssl_cipher           => $ssl_cipher,
     serveradmin          => $serveradmin,
     directoryindex       => 'index.php',
     setenvif             => 'User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown',
