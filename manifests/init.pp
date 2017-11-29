@@ -108,7 +108,7 @@ class nagios (
     port            =>  80,
     docroot         => $cgiroot,
     redirect_status => 'permanent',
-    redirect_dest   => "https://${url}/",
+    redirect_dest   => "https://${url}/nagios",
   }
 
   # Main SSL vhost for nagios and pnp4nagios
