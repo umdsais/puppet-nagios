@@ -105,6 +105,7 @@ class nagios (
   # Non-SSL redirect
   ::apache::vhost { "${url}-http":
     servername      => $url,
+    serveraliases   => $aliases,
     port            =>  80,
     docroot         => $cgiroot,
     redirect_status => 'permanent',
