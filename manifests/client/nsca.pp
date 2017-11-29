@@ -1,7 +1,7 @@
 # Install NSCA client
 class nagios::client::nsca (
-  String $nsca_client_package,
-  Boolean $firewall,
+  $nsca_client_package,
+  $firewall,
 ) {
   package { 'nsca-client':
     ensure => installed,

@@ -1,8 +1,8 @@
 # Short defined type which is used by clients to create suitable Nagios commands
 # for themselves as exported resources without risk of duplication
 define nagios::command (
-  String $command_name,
-  String $command_line,
+  $command_name,
+  $command_line,
 ) {
 
   # Strip off everything after the !, e.g. check_ping!192.168.0.1

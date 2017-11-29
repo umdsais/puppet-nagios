@@ -1,7 +1,7 @@
 # NRPE config for the Nagios server
 class nagios::server::nrpe (
-  Boolean $firewall,
-  String $nrpe_plugin_package,
+  $firewall,
+  $nrpe_plugin_package,
 ) {
 
   # Install plugin to query NRPE on clients

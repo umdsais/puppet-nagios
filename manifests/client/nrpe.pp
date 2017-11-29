@@ -1,10 +1,10 @@
 # NRPE config for clients
 class nagios::client::nrpe (
-  String $nrpe_package,
-  String $nrpe_service,
-  String $nrpe_config,
-  String $nrpe_d,
-  Boolean $selinux,
+  $nrpe_package,
+  $nrpe_service,
+  $nrpe_config,
+  $nrpe_d,
+  $selinux,
 ) {
 
   # Find our array of Nagios server(s) from Hiera

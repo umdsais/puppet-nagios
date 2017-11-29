@@ -1,9 +1,9 @@
 # Configure NSCA server
 class nagios::server::nsca (
-  String $nsca_server_package,
-  String $nsca_service,
-  String $nsca_config,
-  Boolean $firewall,
+  $nsca_server_package,
+  $nsca_service,
+  $nsca_config,
+  $firewall,
 ) {
 
   # Install NSCA server package

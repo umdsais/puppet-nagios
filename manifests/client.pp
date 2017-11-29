@@ -1,16 +1,16 @@
 # Configures nagios client and sets up basic checks
 class nagios::client (
-  Boolean $nrpe               = true,
-  Boolean $nsca               = true,
-  Boolean $selinux            = true,
-  Boolean $firewall           = true,
-  Boolean $basic_checks       = true,
-  String $nrpe_package        = $nagios::params::nrpe_package,
-  String $nsca_client_package = $nagios::params::nsca_client_package,
-  String $nrpe_service        = $nagios::params::nrpe_service,
-  String $nrpe_config         = $nagios::params::nrpe_config,
-  String $nrpe_d              = $nagios::params::nrpe_d,
-  String $nrpe_plugin_package = $nagios::params::nrpe_plugin_package,
+  $nrpe                = true,
+  $nsca                = true,
+  $selinux             = true,
+  $firewall            = true,
+  $basic_checks        = true,
+  $nrpe_package        = $nagios::params::nrpe_package,
+  $nsca_client_package = $nagios::params::nsca_client_package,
+  $nrpe_service        = $nagios::params::nrpe_service,
+  $nrpe_config         = $nagios::params::nrpe_config,
+  $nrpe_d              = $nagios::params::nrpe_d,
+  $nrpe_plugin_package = $nagios::params::nrpe_plugin_package,
 ) inherits nagios::params {
 
   if ($nsca) {

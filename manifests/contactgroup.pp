@@ -1,9 +1,9 @@
 # Create a Nagios contactgroup
 define nagios::contactgroup (
-  String $ensure = present,
-  String $alias  = undef,
-  String $members = undef,
-  String $use = undef,
+  $ensure = present,
+  $alias  = undef,
+  $members = undef,
+  $use = undef,
 ) {
   nagios_contactgroup { $name:
     ensure  => $ensure,

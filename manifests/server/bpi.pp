@@ -1,8 +1,8 @@
 # Install the Nagios BPI addon
 class nagios::server::bpi (
-  String $url,
-  Boolean $selinux,
-  String $webroot,
+  $url,
+  $selinux,
+  $webroot,
 ) {
 
   # Install BPI
