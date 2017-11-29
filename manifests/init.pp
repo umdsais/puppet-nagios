@@ -104,12 +104,11 @@ class nagios (
 
   # Non-SSL redirect
   ::apache::vhost { "${url}-http":
-    servername           => $url,
-    port                 =>  80,
-    docroot              => $cgiroot,
-    redirectmatch_regexp => '^/$',
-    redirectmatch_dest   => "https://${url}/nagios",
-    redirectmatch_status => 'permanent',
+    servername      => $url,
+    port            =>  80,
+    docroot         => $cgiroot,
+    redirect_status => 'permanent',
+    redirect_dest   => "https://${url}/nagios",
   }
 
   # Main SSL vhost for nagios and pnp4nagios
