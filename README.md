@@ -378,4 +378,4 @@ In particular the HTTPS/SSL config is rough around the edges and quite a few opt
 
 ## Development
 
-This module was written primarily for internal use - features we haven't needed to use probably haven't been written. Please send pull requests with new features and bug fixes. You are also welcome to file [issues](https://github.com/djjudas21/puppet-nagios/issues) but I make no guarantees of development effort if the features aren't useful to my employer.
+This module was written initially for internal use - features we haven't needed to use probably haven't been written. Please send pull requests with new features and bug fixes. You are also welcome to file [issues](https://github.com/djjudas21/puppet-nagios/issues) but I make no guarantees of development effort if the features aren't useful to my employer.
