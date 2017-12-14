@@ -111,6 +111,12 @@ Set a flag to mark this Nagios server as a development/testing server. This supp
 ##### `serveradmin`
 Server admin email address for use by Apache. Default: `root@localhost`
 
+##### `auto_os_hostgroup`
+Whether to automatically add this client to a hostgroup of its OS type. Default: `true`
+
+##### `auto_virt_hostgroup`
+Whether to automatically add this client to a hostgroup of its hardware/virtualised platform. Default: `true`
+
 ##### `nrpe_package`
 Name of the NRPE package. You *shouldn't* need to override this. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 

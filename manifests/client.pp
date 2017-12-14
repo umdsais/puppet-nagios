@@ -5,6 +5,8 @@ class nagios::client (
   $selinux             = true,
   $firewall            = true,
   $basic_checks        = true,
+  $auto_os_hostgroup   = true,
+  $auto_virt_hostgroup = true,
   $nrpe_package        = $nagios::params::nrpe_package,
   $nsca_client_package = $nagios::params::nsca_client_package,
   $nrpe_service        = $nagios::params::nrpe_service,
@@ -50,23 +52,32 @@ class nagios::client (
   }
 
   # Create a hostgroup for our OS
-  @@nagios::hostgroup { "${::fqdn}-os":
-    hostgroup      => downcase("${::operatingsystem}-${::operatingsystemmajrelease}"),
-    hostgroupalias => "${::operatingsystem} ${::operatingsystemmajrelease}",
-    tag            => hiera('nagios_server'),
+  if ($auto_os_hostgroup) {
+    @@nagios::hostgroup { "${::fqdn}-os":
+      hostgroup      => downcase("${::operatingsystem}-${::operatingsystemmajrelease}"),
+      hostgroupalias => "${::operatingsystem} ${::operatingsystemmajrelease}",
+      tag            => hiera('nagios_server'),
+    }
+
+    $os_hostgroup = downcase("${::operatingsystem}-${::operatingsystemmajrelease}")
   }
 
   # Create a hostgroup for our platform
-  @@nagios::hostgroup { "${::fqdn}-virtual":
-    hostgroup      => downcase($::virtual),
-    hostgroupalias => $::virtual,
-    tag            => hiera('nagios_server'),
+  if ($auto_virt_hostgroup) {
+    @@nagios::hostgroup { "${::fqdn}-virtual":
+      hostgroup      => downcase($::virtual),
+      hostgroupalias => $::virtual,
+      tag            => hiera('nagios_server'),
+    }
+
+    $virt_hostgroup = downcase($::virtual)
   }
 
-  $hostgroups = [
-    downcase("${::operatingsystem}-${::operatingsystemmajrelease}"),
-    downcase($::virtual),
-  ]
+  # Make final array of hostgroups
+  $hostgroups = delete_undef_values([
+    $os_hostgroup,
+    $virt_hostgroup,
+  ])
 
   # Define the host in nagios, including parent hypervisor, if there is one
   $ilom = hiera('ilom', undef)
