@@ -7,6 +7,7 @@ class nagios::client (
   $basic_checks        = true,
   $auto_os_hostgroup   = true,
   $auto_virt_hostgroup = true,
+  $hostgroups          = [],
   $nrpe_package        = $nagios::params::nrpe_package,
   $nsca_client_package = $nagios::params::nsca_client_package,
   $nrpe_service        = $nagios::params::nrpe_service,
@@ -74,7 +75,8 @@ class nagios::client (
   }
 
   # Make final array of hostgroups
-  $hostgroups = delete_undef_values([
+  $final_hostgroups = delete_undef_values([
+    $hostgroups,
     $os_hostgroup,
     $virt_hostgroup,
   ])
@@ -94,7 +96,7 @@ class nagios::client (
     action_url      => "/nagios/pnp4nagios/graph?host=${::fqdn}",
     notes           => $ilomnotes,
     parents         => $parent,
-    hostgroups      => join($hostgroups, ','),
+    hostgroups      => join($final_hostgroups, ','),
     icon_image_alt  => $::operatingsystem,
     icon_image      => "${::operatingsystem}.png",
     statusmap_image => "${::operatingsystem}.gd2",

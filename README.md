@@ -117,6 +117,9 @@ Whether to automatically add this client to a hostgroup of its OS type. Default:
 ##### `auto_virt_hostgroup`
 Whether to automatically add this client to a hostgroup of its hardware/virtualised platform. Default: `true`
 
+##### `hostgroups`
+Array of other hostgroups to add the system to. Default: `[]`
+
 ##### `nrpe_package`
 Name of the NRPE package. You *shouldn't* need to override this. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 
