@@ -8,6 +8,7 @@ class nagios::client (
   $auto_os_hostgroup   = true,
   $auto_virt_hostgroup = true,
   $hostgroups          = [],
+  $parent              = undef,
   $nrpe_package        = $nagios::params::nrpe_package,
   $nsca_client_package = $nagios::params::nsca_client_package,
   $nrpe_service        = $nagios::params::nrpe_service,
@@ -83,7 +84,6 @@ class nagios::client (
 
   # Define the host in nagios, including parent hypervisor, if there is one
   $ilom = hiera('ilom', undef)
-  $parent = hiera('nagios::parent', undef)
   if ($ilom) {
     $ilomnotes = "iLOM address: ${ilom}"
   } else {
