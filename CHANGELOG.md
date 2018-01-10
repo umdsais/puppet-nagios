@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.0
+* Re-jig BPI groups
+
 ## 0.2.0
 * Make automatic hostgroups optional
 * Allow manual override of hostgroups
