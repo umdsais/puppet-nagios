@@ -4,7 +4,7 @@ define <%= @title %> {
 		desc=<%= @desc %>
 		primary=<%= @primary %>
 		info=<%= @info %>
-		members=<% @members.each_pair do |key, value| -%><%= key -%><%if value['service'] %>;<%= "#{value['service']}" -%><% end %><% if value['opt'] %>;<%= "#{value['opt']}" -%><% end %>, <% end %>
+		members=<% @members.each do |item| -%><%= "#{item['host']}" -%><% if item['service'] %>;<%= "#{item['service']}" -%><% end %><% if item['opt'] %>;<%= "#{item['opt']}" -%><% end %>, <% end %>
 		warning_threshold=<%= @warning_threshold %>
 		critical_threshold=<%= @critical_threshold %>
 		priority=<%= @priority %>

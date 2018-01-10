@@ -10,6 +10,7 @@
        * [nagios::client](#nagiosclient)
     * [Resources](#resources)
        * [nagios::service](#nagiosservice)
+       * [nagios::bpi::config](#nagiosbpiconfig)
 4. [Examples](#examples)
 5. [Limitations - OS compatibility, etc.](#limitations)
 6. [Development - Guide for contributing to the module](#development)
@@ -280,6 +281,114 @@ Add arbitrary service dependencies on other services on this host. Default: `und
 
 ##### `nagios_server`
 The hostname of the Nagios server that will be monitoring this host. Default: `hiera('nagios_server')`
+
+#### `nagios::bpi::config`
+
+The `::nagios::bpi::config` defined type configures a BPI "service", i.e. a group or one or more
+monitored objects in Nagios. The title of this resource forms the BPI groupID and must be alphanumeric
+characters with no spaces. This ID is used internally by the program as well as for the `check_bpi.php` plugin.
+
+This can be a bit confusing to configure, especially the `members` option, so it is probably
+best to read the examples below.
+
+```puppet
+# Group of DNS servers created by checking the `DNS` Nagios service on all DNS servers.
+# If one or more DNS servers is up, this group counts as up.
+nagios::bpi::config { 'dns':
+  displayname => 'DNS',
+  members     => [
+    {
+      host    => 'dns1.example.com',
+      service => 'DNS',
+      opt     => '&',
+    },
+    {
+      host    => 'dns2.example.com',
+      service => 'DNS',
+      opt     => '&',
+    },
+  ],
+  priority    => 2,
+  primary     => 0,
+}
+
+# Group of DHCP servers created by checking the `DHCP` Nagios service on all DHCP servers.
+# If one or more DHCP servers is up, this group counts as up.
+nagios::bpi::config { 'dhcp':
+  displayname => 'DHCP',
+  members     => [
+    {
+      host    => 'dhcp1.example.com',
+      service => 'DHCP',
+      opt     => '&',
+    },
+    {
+      host    => 'dhcp2.example.com',
+      service => 'DHCP',
+      opt     => '&',
+    },
+  ],
+  priority    => 2,
+  primary     => 0,
+}
+
+# Virtual group to reflect the state of the whole network. If the DNS and DHCP groups
+# are both up, this group is up. If either DNS or DHCP is down, this group is down.
+nagios::bpi::config { 'network':
+  displayname => 'Network',
+  members     => [
+    {
+      host => '$dns',
+      opt  => '|',
+    },
+    {
+      host => '$dhcp',
+      opt  => '|',
+    },
+  ],
+  priority    => 1,
+  primary     => 1,
+}
+```
+#### `displayname`
+The display name for the BPI group (required)
+
+#### `members`
+
+Members of this BPI group, which can consist or services and other BPI groups.
+Data should be expressed as an array of hashes with the following keys:
+
+  * `host`: The hostname of a host in Nagios **or** the groupID of a BPI group. Required.
+  * `service`: The servicename of a service in Nagios, if `host` is a Nagios host. Not required if `host` is a BPI group.
+  * `opt`: an `&` or `|` character where `&` means service is part of a cluster and `|` means it is an essential service for the group.
+
+For example: a critical service with an `|` option will cause a critical state for the entire group.
+For clusters, critical is only reached when ALL services in a cluster are NOT OK.
+
+#### `nagios`
+Automatically create a Nagios check for this BPI group. Default: `true`
+
+#### `desc`
+Description for a bpi group. Optional, default: `undef`
+
+#### `primary`
+Primary/Top-Level groups are `1`, subgroups are `0`. Setting `0` hides the BPI group except where is explicitly
+referenced as a component of another BPI group. Default: `1`
+
+#### `info`
+Link to internal or external webpage. Optional, default: `undef`
+
+#### `warning_threshold`
+The number of problems a group reaches before going 'warning'. Default: `0`
+
+#### `critical_threshold`
+The number of problems a group reaches before going 'critical'. Default: `0`
+
+#### `priority`
+The display priority on screen between `1-3`, `1` being 'high priority'. Default: `1`
+
+#### `event_handler`
+Set an event handler for this BPI group's Nagios check. Only makes sense if `nagios=true`. Default: `undef`
 
 ## Examples
 
