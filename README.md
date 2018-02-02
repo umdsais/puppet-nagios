@@ -124,6 +124,9 @@ Array of other hostgroups to add the system to. Default: `[]`
 ##### `parent`
 Name of a parent object. Default: `undef`
 
+##### `alias`
+Set alias for a host. Default: `undef`
+
 ##### `nrpe_package`
 Name of the NRPE package. You *shouldn't* need to override this. If you need to add support for a new distro, please send a pull request or [raise an issue](https://github.com/djjudas21/puppet-nagios/issues).
 

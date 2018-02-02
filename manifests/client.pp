@@ -9,6 +9,7 @@ class nagios::client (
   $auto_virt_hostgroup = true,
   $hostgroups          = [],
   $parent              = undef,
+  $alias               = undef,
   $nrpe_package        = $nagios::params::nrpe_package,
   $nsca_client_package = $nagios::params::nsca_client_package,
   $nrpe_service        = $nagios::params::nrpe_service,
@@ -92,6 +93,7 @@ class nagios::client (
   @@nagios_host { $::fqdn:
     ensure          => present,
     address         => $::ipaddress,
+    alias           => $alias,
     use             => 'generic-host',
     action_url      => "/nagios/pnp4nagios/graph?host=${::fqdn}",
     notes           => $ilomnotes,
