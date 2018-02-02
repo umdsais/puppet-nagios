@@ -7,6 +7,22 @@
   "source": "https://github.com/djjudas21/puppet-nagios",
   "project_page": "https://github.com/djjudas21/puppet-nagios",
   "issues_url": "https://github.com/djjudas21/puppet-nagios/issues",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Fedora",
+      "operatingsystemrelease": [
+        "25",
+        "26",
+        "27"
+      ]
+    }
+  ],
   "dependencies": [
     {"name":"puppetlabs-stdlib","version_requirement":">= 4.0.0 < 5.0.0"},
     {"name":"puppetlabs/concat","version_requirement":">= 4.0.0 < 5.0.0"},
