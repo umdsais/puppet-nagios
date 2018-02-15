@@ -17,6 +17,7 @@ class nagios (
   $nagios_package      = $nagios::params::nagios_package,
   $nagios_service      = $nagios::params::nagios_service,
   $serveradmin         = 'root@localhost',
+  $notify_admin        = false,
   $ssl_cert            = '/path/to/cert.crt',
   $ssl_key             = '/path/to/key.key',
   $ssl_cipher          = 'HIGH:!MEDIUM:!aNULL:!MD5:!RC4:!3DES',
@@ -256,13 +257,20 @@ class nagios (
     default => 3,
   }
 
+  $notification_period = $notify_admin ? {
+    true    => undef,
+    default => 'none',
+  }
+
   # Create generic contact
   nagios_contact { 'admin':
-    contactgroups => 'users',
-    alias         => 'Admin',
-    use           => 'generic-contact',
-    tag           => hiera('nagios_server'),
-    email         => $serveradmin,
+    contactgroups               => 'users',
+    alias                       => 'Admin',
+    use                         => 'generic-contact',
+    tag                         => hiera('nagios_server'),
+    email                       => $serveradmin,
+    host_notification_period    => $notification_period,
+    service_notification_period => $notification_period,
   }
 
   # Create other contacts from Hiera
