@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.2
+* Default disable notifications being sent to the serveradmin
+
+## 0.3.1
+* Expose alias as a settable parameter
+
 ## 0.3.0
 * Re-jig BPI groups
 

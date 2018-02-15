@@ -1,6 +1,6 @@
 {
   "name": "jgazeley/nagios",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "author": "jgazeley",
   "summary": "Manage Nagios, NRPE, NSCA, PNP4Nagios, BPI and other monitoring components",
   "license": "Apache-2.0",
