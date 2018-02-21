@@ -43,9 +43,14 @@ define nagios::service (
   }
 
   if ($add_servicegroup) {
+
+    # Figure out the friendly command name
+    # ie reduce check_ping!127.0.0.1 to check_ping
+    $safe_command = regsubst($check_command, '^(.*)!?')
+
     # Also configure a nagios_servicegroup for this service
     @@nagios::servicegroup { "${title}-${host_name}":
-      groupname  => $check_command,
+      groupname  => $safe_command,
       groupalias => $service_description,
       tag        => $nagios_server,
     }
