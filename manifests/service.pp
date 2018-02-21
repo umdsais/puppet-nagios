@@ -46,7 +46,7 @@ define nagios::service (
 
     # Figure out the friendly command name
     # ie reduce check_ping!127.0.0.1 to check_ping
-    $safe_command = regsubst($check_command, '^(.*)!?', \1)
+    $safe_command = regsubst($check_command, '^(.*)!?', '\1')
 
     # Also configure a nagios_servicegroup for this service
     @@nagios::servicegroup { "${title}-${host_name}":
