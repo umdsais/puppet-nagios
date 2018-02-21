@@ -5,7 +5,8 @@ define nagios::servicegroup (
   $groupalias = undef,
 ) {
   ensure_resource('nagios_servicegroup', $groupname, {
-    'alias'  => $groupalias,
+    # alias commented for PUP-8479
+    #'alias'  => $groupalias,
     'ensure' => 'present',
     'owner'  => 'root',
     'group'  => 'nagios',
