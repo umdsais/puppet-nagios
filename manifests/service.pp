@@ -5,7 +5,7 @@ define nagios::service (
   $host_name = $::fqdn,
   $check_command = $title,
   $use = undef,
-  $servicegroups = $title,
+  $servicegroups = undef,
   $add_servicegroup = true,
   $add_servicedep = true,
   $active_checks_enabled = undef,
@@ -23,6 +23,17 @@ define nagios::service (
   $service_dependency = undef,
   $nagios_server = hiera('nagios_server'),
 ) {
+  # Generate "safe" servicegroup name (without spaces) either from
+  # service description, or check_command
+  #$groupname = regsubst($service_description, ' ', '', 'G')
+  $groupname = regsubst($check_command, '^(.*)[!\ ]?', '\1')
+
+  # Append the auto servicegroup to the additional manual list
+  $servicegrouparray = $add_servicegroup ? {
+    true    => concat($groupname, $servicegroups),
+    default => $servicegroups,
+  }
+
   # Pass on various params to nagios_service
   @@nagios_service { "${title}-${host_name}":
     host_name             => $host_name,
@@ -32,7 +43,7 @@ define nagios::service (
     },
     service_description   => $service_description,
     use                   => $use,
-    servicegroups         => $servicegroups,
+    servicegroups         => $servicegrouparray,
     tag                   => $nagios_server,
     active_checks_enabled => $active_checks_enabled,
     max_check_attempts    => $max_check_attempts,
@@ -43,10 +54,6 @@ define nagios::service (
   }
 
   if ($add_servicegroup) {
-
-    # Figure out the friendly command name
-    # ie reduce check_ping!127.0.0.1 to check_ping
-    $safe_command = regsubst($check_command, '^(.*)!?', '\1')
 
     # Also configure a nagios_servicegroup for this service
     @@nagios::servicegroup { "${title}-${host_name}":
