@@ -26,7 +26,7 @@ define nagios::service (
   # Generate "safe" servicegroup name (without spaces) either from
   # service description, or check_command
   #$groupname = regsubst($service_description, ' ', '', 'G')
-  $groupname = regsubst($check_command, '^(.*)[!\ ]?', '\1')
+  $groupname = regsubst($check_command, '^(.*)[! ]?', '\1')
 
   # Append the auto servicegroup to the additional manual list
   $servicegrouparray = $add_servicegroup ? {
