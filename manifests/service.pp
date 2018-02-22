@@ -30,7 +30,7 @@ define nagios::service (
 
   # Append the auto servicegroup to the additional manual list
   $servicegrouparray = $add_servicegroup ? {
-    true    => concat($groupname, $servicegroups),
+    true    => concat($groupname, any2array($servicegroups)),
     default => $servicegroups,
   }
 
