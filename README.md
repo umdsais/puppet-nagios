@@ -238,7 +238,8 @@ Human-readable name for the service.
 Name of the Nagios template to inherit from. Default: `undef`
 
 ##### `servicegroups`
-One or more servicegroups that this service should be a member of. Default: `$title`
+One or more additional servicegroups that this service should be a member of. It will automatically be added to a
+servicegroup with the same name as the check. Default: `undef`
 
 ##### `add_servicegroup`
 Whether to automatically create the servicegroup that this service belongs to by default. Default: `true`
