@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.3
+* Fix bug with duplicate servicegroups
+
 ## 0.3.2
 * Default disable notifications being sent to the serveradmin
 
