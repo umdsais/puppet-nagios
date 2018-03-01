@@ -24,7 +24,7 @@ define nagios::service (
   $nagios_server = hiera('nagios_server'),
 ) {
   # Generate "safe" servicegroup name (without spaces) from check_command
-  $groupname = regsubst($check_command, '^([^! ]+)[! ]?', '\1')
+  $groupname = regsubst($check_command, '^(.*)[! ]?', '\1')
 
   # Append the auto servicegroup to the additional manual list
   $servicegrouparray = $add_servicegroup ? {
