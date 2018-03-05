@@ -30,6 +30,8 @@ define nagios::bpi::config (
   $critical_threshold = 0,
   $priority = 1,
   $event_handler = undef,
+  $uptime_report = undef,
+  $uptime_report_recipients = $::nagios::serveradmin,
 ) {
   concat::fragment{ "bpi-${title}":
     target  => 'bpi.conf',
@@ -43,6 +45,37 @@ define nagios::bpi::config (
       check_command       => "check_bpi!${title}",
       service_description => $displayname,
       event_handler       => $event_handler,
+    }
+  }
+
+  if ($uptime_report) {
+    # yesterday, lastweek, lastmonth, lastyear
+
+    $month = $uptime_report ? {
+      'lastyear' => 1,
+      default    => undef,
+    }
+
+    $monthday = $uptime_report ? {
+      'lastmonth' => 1,
+      default     => undef,
+    }
+
+    $weekday = $uptime_report ? {
+      'lastweek' => 1,
+      default    => undef,
+    }
+
+    $contactlist = inline_template('<% @uptime_report_recipients.each do |email| -%> -r <%= email %><% end -%>')
+
+    cron { "${title}-availability":
+      require  => File['nagios-report'],
+      command  => "nagios-report -h bpi -s ${displayname} -t ${uptime_report} -o uptime -v -d${contactlist}",
+      month    => $month,
+      monthday => $monthday,
+      weekday  => $weekday,
+      hour     => '2',
+      minute   => '0',
     }
   }
 }

@@ -53,6 +53,23 @@ class nagios::server::bpi (
     notes_url       => "https://${url}/nagios/bpi/index.php",
   }
 
+  # Install nagios-report to report on Nagios availability
+  file { '/opt/nagios-report':
+    ensure => 'directory',
+  }
+  vcsrepo { '/opt/nagios-report':
+    ensure   => 'latest',
+    provider => 'git',
+    source   => 'https://github.com/djjudas21/nagios-report.git',
+    require  => File['/opt/nagios-report'],
+  }
+  file { 'nagios-report':
+    ensure  => 'link',
+    path    => '/usr/bin/nagios-report',
+    target  => '/opt/nagios-report/nagios-report.pl',
+    require => Vcsrepo['/opt/nagios-report'],
+  }
+
   # Install SELinux Nagios BPI policy
   if ($selinux) {
     selinux::module { 'bpi':
