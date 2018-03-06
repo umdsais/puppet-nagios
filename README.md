@@ -397,6 +397,14 @@ The display priority on screen between `1-3`, `1` being 'high priority'. Default
 #### `event_handler`
 Set an event handler for this BPI group's Nagios check. Only makes sense if `nagios=true`. Default: `undef`
 
+#### `uptime_report`
+Enable periodic email reports about uptime of BPI services. Choose from `yesterday`, `lastweek`,
+`lastmonth`, `lastyear`. Default: `undef`
+
+#### `uptime_report_recipients`
+One or more email addresses who should receive the uptime report. Mus be expressed as an array
+even if there is only one email address. Default: `$serveradmin`
+
 ## Examples
 
 ### Install a Nagios server
