@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.0
+* Add support for periodic uptime notifications
+
 ## 0.3.3
 * Fix bug with duplicate servicegroups
 
