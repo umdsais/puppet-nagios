@@ -41,7 +41,7 @@ class nagios::client (
       'nagios-plugins-bonding',
       'nagios-plugins-perl']:
       ensure  => installed,
-      require => Class['epel'],
+      #      require => Class['epel'],
     }
   }
 
